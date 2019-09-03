@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "350101217726",
+    "firebase_url": "https://colorpo-6fb15.firebaseio.com",
+    "project_id": "colorpo-6fb15",
+    "storage_bucket": "colorpo-6fb15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350101217726:android:700beb9079470119",
+        "android_client_info": {
+          "package_name": "com.example.colorpo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350101217726-4nraf45iudgbjpli9ptdup9r23hcq1la.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.colorpo",
+            "certificate_hash": "81b6061bd2d13610f3132c6778eda97b6be6ec21"
+          }
+        },
+        {
+          "client_id": "350101217726-nicg229k7f9nlmdqu8q8rp66tj20fqca.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCW-z0ZYNMV82Yl1Sflw6dz7AYQYcgbGk0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350101217726-nicg229k7f9nlmdqu8q8rp66tj20fqca.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
