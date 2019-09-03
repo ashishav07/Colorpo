@@ -13,12 +13,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        regButton = (Button)findViewById(R.id.register);
+        regButton = findViewById(R.id.register);
         regButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
     }
 }

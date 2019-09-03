@@ -4,4 +4,9 @@
     <string name="pass">Enter Password</string>
     <string name="login"> Login </string>
     <string name="register"> Register </string>
+    <string name="fname"> First Name </string>
+    <string name="lname"> Last Name </string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile Number</string>
+    <string name="pass1">Retype Password</string>
 </resources>
