@@ -2,6 +2,7 @@
     <string name="app_name"> Colorpo </string>
     <string name="username">Enter User Name</string>
     <string name="pass">Enter Password</string>
+    <string name="regPass">Enter Password(min 6 char)</string>
     <string name="login"> Login </string>
     <string name="register"> Register </string>
     <string name="fname"> First Name </string>
@@ -9,4 +10,9 @@
     <string name="email">Email</string>
     <string name="mobile">Mobile Number</string>
     <string name="pass1">Retype Password</string>
+    <string name="nameerror">Enter a valid name</string>
+    <string name="emailerror">Enter a valid email</string>
+    <string name="mobileerror">Enter a valid mobile</string>
+    <string name="dateerror">Enter a valid date</string>
+    <string name="dob1">Enter Date of Birth (DD/MM/YYYY)</string>
 </resources>
