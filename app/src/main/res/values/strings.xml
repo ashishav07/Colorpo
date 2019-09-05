@@ -15,4 +15,6 @@
     <string name="mobileerror">Enter a valid mobile</string>
     <string name="dateerror">Enter a valid date</string>
     <string name="dob1">Enter Date of Birth (DD/MM/YYYY)</string>
+    <string name="data_inserted">Data Inserted Successfully</string>
+    <string name="registration_success">Registration Successfull</string>
 </resources>

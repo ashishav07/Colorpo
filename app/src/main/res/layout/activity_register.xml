@@ -46,13 +46,6 @@
         android:inputType="phone"
         />
     <EditText
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/username"
-        android:inputType="text"
-        />
-    <EditText
         android:id="@+id/pass1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,4 +65,10 @@
         android:id="@+id/reg"
         android:text="@string/register"
         />
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 </LinearLayout>
