@@ -7,26 +7,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static java.lang.Boolean.FALSE;
-import static java.lang.Boolean.TRUE;
 
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
@@ -42,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseReference reference;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
-//    long maxId=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,30 +142,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Long phn = Long.parseLong(mobile.getText().toString().trim());
                         if (task.isSuccessful()) {
 
-                            User user = new User(
+                            user = new User(
                                     fname.getText().toString().trim(),
                                     lname.getText().toString().trim(),
                                     phn,
                                     email.getText().toString().trim()
                             );
-
-                            FirebaseDatabase.getInstance().getReference("Users")
+                                    FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, R.string.registration_success , Toast.LENGTH_LONG).show();
+                                        Toast.makeText(RegisterActivity.this, "Registered" , Toast.LENGTH_LONG).show();
                                     } else {
                                         Toast.makeText(RegisterActivity.this, "failure" , Toast.LENGTH_LONG).show();
-
                                     }
                                 }
                             });
 
                         } else {
                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            email.setError("Email Already in use");
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });

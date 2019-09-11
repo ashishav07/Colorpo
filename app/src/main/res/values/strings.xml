@@ -17,4 +17,5 @@
     <string name="dob1">Enter Date of Birth (DD/MM/YYYY)</string>
     <string name="data_inserted">Data Inserted Successfully</string>
     <string name="registration_success">Registration Successfull</string>
+    <string name="email_in_use">Email Already in use</string>
 </resources>
