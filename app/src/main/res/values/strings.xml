@@ -18,4 +18,5 @@
     <string name="data_inserted">Data Inserted Successfully</string>
     <string name="registration_success">Registration Successfull</string>
     <string name="email_in_use">Email Already in use</string>
+    <string name="about_us">About Us</string>
 </resources>

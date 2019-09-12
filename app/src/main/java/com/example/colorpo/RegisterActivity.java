@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.regex.Matcher;
@@ -32,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private DatabaseReference reference;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
+    private FirebaseUser fUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         return matcher.matches();
     }
     private boolean isValidPassword(String pass,String pass1) {
-        if (pass != null && pass.length() > 6 && pass1.equals(pass)) {
+        if (pass != null && pass.length() >= 6 && pass1.equals(pass)) {
             return true;
         }
         return false;
@@ -155,8 +157,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 public void onComplete(@NonNull Task<Void> task) {
                                     progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(RegisterActivity.this, "Registered" , Toast.LENGTH_LONG).show();
-                                    } else {
+                                        fUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(getApplicationContext(),"Email Verification Sent",Toast.LENGTH_SHORT).show();
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                            }
+                                        });
+                                    }else {
                                         Toast.makeText(RegisterActivity.this, "failure" , Toast.LENGTH_LONG).show();
                                     }
                                 }
