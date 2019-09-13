@@ -19,4 +19,6 @@
     <string name="registration_success">Registration Successfull</string>
     <string name="email_in_use">Email Already in use</string>
     <string name="about_us">About Us</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
 </resources>

@@ -1,7 +1,7 @@
 package com.example.colorpo;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText fname;
     private EditText lname;
@@ -28,7 +27,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText pass1;
     private EditText email;
     private Button reg;
-    private Boolean flag;
     private User user;
     private DatabaseReference reference;
     private ProgressBar progressBar;
@@ -52,15 +50,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         reg.setOnClickListener(this);
         reference = FirebaseDatabase.getInstance().getReference().child("User");
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(mAuth.getCurrentUser()!=null){
-            Toast.makeText(RegisterActivity.this,"User Already Registered",Toast.LENGTH_SHORT).show();
-        }
-    }
-
 
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -98,39 +87,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if(isValidName(fname.getText().toString().trim())){
-            Log.i("fname", "First name Valid");
-        }
-        else{
+        if(!isValidName(fname.getText().toString().trim())){
             fname.setError("Invalid Name");
             return;
         }
-        if(isValidLName(lname.getText().toString().trim())){
-            Log.i("lname", "last name Valid");
-        }
-        else{
+        if(!isValidLName(lname.getText().toString().trim())){
             lname.setError("Invalid Name");
             return;
         }
 
-        if(isValidEmail(email.getText().toString().trim())){
-            Log.i("email", "Email Match");
-        }
-        else{
+        if(!isValidEmail(email.getText().toString().trim())){
             email.setError("Enter Valid Email");
             return;
         }
-        if(isValidMobile(mobile.getText().toString().trim())){
-            Log.i("mobile", "Number Valid");
-        }
-        else{
+        if(!isValidMobile(mobile.getText().toString().trim())){
             mobile.setError("Invalid Number");
             return;
         }
-        if(isValidPassword(pass.getText().toString(),pass1.getText().toString())){
-            Log.i("pass", "Passwords Match");
-        }
-        else{
+        if(!isValidPassword(pass.getText().toString(),pass1.getText().toString())){
             pass.setError("Invalid or Passwords do not match");
             return;
         }
@@ -143,7 +117,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Long phn = Long.parseLong(mobile.getText().toString().trim());
                         if (task.isSuccessful()) {
-
+                            fUser = mAuth.getCurrentUser();
                             user = new User(
                                     fname.getText().toString().trim(),
                                     lname.getText().toString().trim(),
@@ -162,6 +136,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 Toast.makeText(getApplicationContext(),"Email Verification Sent",Toast.LENGTH_SHORT).show();
                                                 progressBar.setVisibility(View.INVISIBLE);
+                                                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                                                startActivity(intent);
                                             }
                                         });
                                     }else {
@@ -169,7 +145,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     }
                                 }
                             });
-
                         } else {
                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             email.setError("Email Already in use");
