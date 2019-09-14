@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void userLogin(){
-        user = mAuth.getCurrentUser();
         etEmail = findViewById(R.id.username);
         etPassword = findViewById(R.id.pass);
         String email,password;
@@ -69,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    user = mAuth.getCurrentUser();
                     if(user.isEmailVerified()) {
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
