@@ -75,11 +75,45 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
                 break;
-
             case R.id.about:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
                 break;
-            case R.id.signOut:
+            case R.id.exitApp:
+                AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+                myAlert.setTitle("Exit");
+                myAlert.setMessage("Do you want to exit?");
+                myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+//                    finish();
+                    }
+                });
+                myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                myAlert.show();
+                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.option_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.sign_out:
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
                 myAlert.setTitle("Exit");
                 myAlert.setMessage("Do you really want to Sign Out?");
@@ -98,27 +132,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
                 myAlert.show();
-                break;
-        }
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    // To show the three dot menu on right hand side
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.option_menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sign_out:
-                // Put sign out code here
-                Toast.makeText(this, "Sign Out", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.search:
                 // Put search code here

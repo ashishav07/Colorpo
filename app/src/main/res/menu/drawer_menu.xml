@@ -17,9 +17,9 @@
             android:icon="@drawable/ic_contact"
             android:title="Contact Us" />
         <item
-            android:id="@+id/signOut"
+            android:id="@+id/exitApp"
             android:icon="@drawable/ic_exit_to_app"
-            android:title="Sign Out" />
+            android:title="Exit App" />
     </group>
 
 </menu>
