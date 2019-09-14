@@ -9,10 +9,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -41,7 +43,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //            super.onBackPressed();
             AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
             myAlert.setTitle("Exit");
-            myAlert.setMessage("Are you sure you want to quit?");
+            myAlert.setMessage("Do you want to exit?");
             myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -70,6 +72,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.about:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+                break;
+            case R.id.signOut:
+                AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+                myAlert.setTitle("Exit");
+                myAlert.setMessage("Do you really want to Sign Out?");
+                myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseAuth.getInstance().signOut();
+                        finish();
+                        startActivity(new Intent(HomeActivity.this,LoginActivity.class));
+                    }
+                });
+                myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                myAlert.show();
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
