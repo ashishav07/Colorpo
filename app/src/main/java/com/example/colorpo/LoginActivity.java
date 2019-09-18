@@ -3,7 +3,10 @@ package com.example.colorpo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,11 +33,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mAuth = FirebaseAuth.getInstance();
-        findViewById(R.id.register).setOnClickListener(this);
-        findViewById(R.id.login).setOnClickListener(this);
-        progressBar = findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.INVISIBLE);
+            mAuth = FirebaseAuth.getInstance();
+            findViewById(R.id.register).setOnClickListener(this);
+            findViewById(R.id.login).setOnClickListener(this);
+            progressBar = findViewById(R.id.progressbar);
+            progressBar.setVisibility(View.INVISIBLE);
+
     }
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"

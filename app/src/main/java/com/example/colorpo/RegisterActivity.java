@@ -48,7 +48,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         progressBar.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
         reg.setOnClickListener(this);
-        reference = FirebaseDatabase.getInstance().getReference().child("User");
+        reference = FirebaseDatabase.getInstance().getReference("Posts");
+
     }
 
     private boolean isValidEmail(String email) {
