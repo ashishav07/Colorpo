@@ -13,7 +13,8 @@
         app:passwordToggleEnabled="true"
         android:id="@+id/username_layout"
         app:errorEnabled="true"
-        app:hintTextAppearance="@style/HintText">
+        app:hintTextAppearance="@style/HintText"
+        app:errorTextAppearance="@style/ErrorText">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,7 +74,7 @@
         android:id="@+id/forgot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         android:layout_marginTop="42dp"
         android:textSize="20sp"
         android:onClick="onClick"
@@ -83,6 +84,5 @@
         android:id="@+id/progressbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_gravity="center"/>
 </LinearLayout>

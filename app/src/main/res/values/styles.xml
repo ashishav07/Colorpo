@@ -18,4 +18,9 @@
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
+    <style name="ErrorText" parent="TextAppearance.Design.Error">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#FF0000</item>
+    </style>
+
 </resources>
