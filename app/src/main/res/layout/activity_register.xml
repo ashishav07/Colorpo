@@ -64,6 +64,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/reg"
         android:text="@string/register"
+        android:textColor="#FFFFFF"
         android:background="@drawable/buttonshape"
         />
     <ProgressBar

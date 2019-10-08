@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name"> Colorpo </string>
-    <string name="username">Enter User Name</string>
-    <string name="pass">Enter Password</string>
+    <string name="username">User Name</string>
+    <string name="pass">Password</string>
     <string name="regPass">Enter Password(min 6 char)</string>
     <string name="login"> Login </string>
     <string name="register"> Register </string>

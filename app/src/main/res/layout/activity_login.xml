@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".LoginActivity"
     android:orientation="vertical"
-    android:gravity="center"
-    >
-    <EditText
+    android:gravity="center">
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
-        android:id="@+id/username"
-        >
-    </EditText>
-
-    <EditText
+        app:passwordToggleEnabled="true"
+        android:id="@+id/username_layout"
+        app:errorEnabled="true"
+        app:hintTextAppearance="@style/HintText">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/username"
+            android:id="@+id/username"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/pass"
-        android:inputType="textPassword"
-        android:id="@+id/pass"
-        android:layout_below="@+id/username" />
+        app:passwordToggleEnabled="true"
+        android:id="@+id/password_layout"
+        app:errorEnabled="true"
+        app:hintTextAppearance="@style/HintText">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pass"
+            android:inputType="textPassword"
+            android:id="@+id/pass"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -62,6 +76,7 @@
         android:text="Forgot Password?"
         android:layout_marginTop="42dp"
         android:textSize="20sp"
+        android:onClick="onClick"
         />
 
     <ProgressBar

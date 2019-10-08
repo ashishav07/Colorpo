@@ -13,6 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,7 +25,8 @@ import java.util.regex.Pattern;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    private EditText etEmail,etPassword;
+    private TextInputEditText etEmail,etPassword;
+    private TextInputLayout temail,tepassword;
     private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +53,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void userLogin(){
         etEmail = findViewById(R.id.username);
         etPassword = findViewById(R.id.pass);
+        temail = findViewById(R.id.username_layout);
+        tepassword = findViewById(R.id.password_layout);
+        temail.setError(null);
+        tepassword.setError(null);
         String email,password;
         email = etEmail.getText().toString();
         password = etPassword.getText().toString();
         if(!isValidEmail(email)){
-            etEmail.setError("Enter Valid Email");
+//            etEmail.setError("Enter Valid Email");
+            temail.setError("E-Mail isn't valid");
             progressBar.setVisibility(View.INVISIBLE);
             return;
         }
+        else {
+            temail.setError(null);
+        }
         if(!isValidPassword(password)){
-            etPassword.setError("Invalid password!");
+//            etPassword.setError("Invalid password!");
+            tepassword.setError("Invalid Password");
             progressBar.setVisibility(View.INVISIBLE);
             return;
+        }
+        else {
+            temail.setError(null);
         }
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -95,8 +110,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.login:
+
                 progressBar.setVisibility(View.VISIBLE);
                 userLogin();
+                break;
+            case R.id.forgot :
+                Intent forgot_intent = new Intent(this,ForgotActivity.class);
+                startActivity(forgot_intent);
                 break;
         }
     }

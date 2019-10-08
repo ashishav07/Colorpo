@@ -17,6 +17,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/send_reset_password_link"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:background="@drawable/buttonshape"
+        android:textColor="#FFFFFF"
         android:id="@+id/forgot"
         />
 </LinearLayout>
