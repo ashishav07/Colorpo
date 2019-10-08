@@ -6,7 +6,9 @@
     android:background="@color/colorPrimaryDark"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:padding="16dp"
-    android:gravity="bottom">
+    android:gravity="bottom"
+    android:id="@+id/nav"
+    >
 
     <ImageView
         android:layout_width="wrap_content"

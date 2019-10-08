@@ -8,35 +8,26 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import static android.content.DialogInterface.*;
-
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private FloatingActionButton floatingActionButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
-
-        updateNavHeader();
 
         // To show the button of navigation drawer
+        setContentView(R.layout.activity_home);
         drawer = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -48,18 +39,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // Floating Action Button Implementation
-        floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton.setOnClickListener(this);
-    }
-     //Floating Button Onclick Listener
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.floatingActionButton:
-                startActivity(new Intent(this,PostActivity.class));
-                break;
-        }
     }
 
     @Override
@@ -71,7 +50,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
             myAlert.setTitle("Exit");
             myAlert.setMessage("Do you want to exit?");
-            myAlert.setPositiveButton("Yes", new OnClickListener() {
+            myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     moveTaskToBack(true);
@@ -80,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //                    finish();
                 }
             });
-            myAlert.setNegativeButton("No", new OnClickListener() {
+            myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
@@ -89,8 +68,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             myAlert.show();
         }
     }
-        @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
@@ -102,7 +82,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
                 myAlert.setTitle("Exit");
                 myAlert.setMessage("Do you want to exit?");
-                myAlert.setPositiveButton("Yes", new OnClickListener() {
+                myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         moveTaskToBack(true);
@@ -111,7 +91,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //                    finish();
                     }
                 });
-                myAlert.setNegativeButton("No", new OnClickListener() {
+                myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -135,9 +115,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.sign_out:
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
-                myAlert.setTitle("Sign Out");
+                myAlert.setTitle("Exit");
                 myAlert.setMessage("Do you really want to Sign Out?");
-                myAlert.setPositiveButton("Yes", new OnClickListener() {
+                myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FirebaseAuth.getInstance().signOut();
@@ -145,7 +125,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         startActivity(new Intent(HomeActivity.this,LoginActivity.class));
                     }
                 });
-                myAlert.setNegativeButton("No", new OnClickListener() {
+                myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
@@ -159,13 +139,5 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
         return true;
-    }
-
-    public void updateNavHeader(){
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        View headerView = navigationView.getHeaderView(0);
-        TextView textView = headerView.findViewById(R.id.username);
-        textView.setText("Ashish");
     }
 }
