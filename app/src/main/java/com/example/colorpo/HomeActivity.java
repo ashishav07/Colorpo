@@ -39,6 +39,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // To handle clicks on navigation menu items
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
         navigationView.getMenu().getItem(4).setCheckable(false); //Exit button is not checkable
         navigationView.getMenu().getItem(0).setChecked(true);  //Home button is default
         onNavigationItemSelected(navigationView.getMenu().getItem(0));

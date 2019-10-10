@@ -2,11 +2,11 @@
 <ScrollView android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ProfileFragment"
         android:background="@color/graylight"
         android:orientation="vertical">
@@ -19,12 +19,21 @@
                 android:layout_height="350dp"
                 android:orientation="vertical">
                 <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_ripple"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/edit_profile"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_gravity="end"/>
+                <ImageView
                     android:layout_marginTop="45dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:src="@drawable/ic_profile"
-                    android:contentDescription="User Image"/>
+                    android:contentDescription="@string/user_image"/>
                 <TextView
                     android:layout_marginTop="10dp"
                     android:layout_gravity="center_horizontal"
@@ -127,67 +136,77 @@
             android:layout_marginTop="45dp">
             <LinearLayout
                 android:orientation="horizontal"
-                android:paddingLeft="25dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:contentDescription="Email Icon"
                     android:src="@drawable/ic_email"/>
                 <TextView
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="username@gmail.com"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal"
-                android:paddingLeft="25dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:contentDescription="Phone Number"
                     android:src="@drawable/ic_phone"/>
                 <TextView
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="+91-9876543210"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal"
-                android:paddingLeft="25dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:contentDescription="Home Icon"
                     android:src="@drawable/ic_home"/>
                 <TextView
                     android:textStyle="bold"
-
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="Add to group"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal"
-                android:paddingLeft="25dp"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
+                    android:contentDescription="Search Icon"
                     android:src="@drawable/ic_search"/>
                 <TextView
                     android:textStyle="bold"
@@ -195,7 +214,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="Show all comments"/>
             </LinearLayout>
         </LinearLayout>
