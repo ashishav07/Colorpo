@@ -49,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
         reg.setOnClickListener(this);
         reference = FirebaseDatabase.getInstance().getReference("Posts");
+        getSupportActionBar().hide();
 
     }
 
