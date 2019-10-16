@@ -190,7 +190,9 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:text="username@gmail.com"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:id="@+id/email"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -205,7 +207,8 @@
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:contentDescription="Phone Number"
-                    android:src="@drawable/ic_phone" />
+                    android:src="@drawable/ic_phone"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -213,57 +216,10 @@
                     android:layout_gravity="center_vertical"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:text="+91-9876543210"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:orientation="horizontal"
-                android:paddingStart="25dp"
-                android:paddingEnd="25dp">
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:contentDescription="Home Icon"
-                    android:src="@drawable/ic_home" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:text="Add to group"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:orientation="horizontal"
-                android:paddingStart="25dp"
-                android:paddingEnd="25dp">
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:contentDescription="Search Icon"
-                    android:src="@drawable/ic_search" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:text="Show all comments"
-                    android:textStyle="bold" />
+                    android:text=""
+                    android:textStyle="bold"
+                    android:id="@+id/mobile"
+                    />
             </LinearLayout>
         </LinearLayout>
 
@@ -274,8 +230,10 @@
             android:layout_marginTop="35dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/buttonshape"
-            android:text="Follow Me"
-            android:textColor="#fff" />
+            android:text="Request More Information"
+            android:textColor="#fff"
+            android:id="@+id/request"
+            />
 
     </LinearLayout>
 </ScrollView>

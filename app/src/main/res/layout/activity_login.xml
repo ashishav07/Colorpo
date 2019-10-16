@@ -10,7 +10,6 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:passwordToggleEnabled="true"
         android:id="@+id/username_layout"
         app:errorEnabled="true"
         app:hintTextAppearance="@style/HintText"
@@ -77,7 +76,6 @@
         android:text="@string/forgot_password"
         android:layout_marginTop="42dp"
         android:textSize="20sp"
-        android:onClick="onClick"
         />
 
     <ProgressBar

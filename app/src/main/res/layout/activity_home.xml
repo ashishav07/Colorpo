@@ -37,6 +37,9 @@
                 android:layout_margin="12dp"
                 android:clickable="true"
                 android:focusable="true"
+                android:backgroundTint="#e91e63"
+                app:rippleColor="#ffffff"
+                android:tint="#ffffff"
                 app:srcCompat="@android:drawable/ic_input_add" />
         </FrameLayout>
     </LinearLayout>

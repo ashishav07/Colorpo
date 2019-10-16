@@ -23,6 +23,10 @@
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="send_reset_password_link">Send Reset Password Link</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="post">Post</string>
+    <string name="subject">Subject</string>
+    <string name="description">Description</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
