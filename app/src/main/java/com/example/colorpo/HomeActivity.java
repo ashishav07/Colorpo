@@ -14,16 +14,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private NavigationView navigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +45,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         // To handle clicks on navigation menu items
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         navigationView.getMenu().getItem(4).setCheckable(false); //Exit button is not checkable
         navigationView.getMenu().getItem(0).setChecked(true);  //Home button is default
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        // dynamic username in navigation header
+        NavigationView navigateView = findViewById(R.id.nav_view);
+        View headerView = navigateView.getHeaderView(0);
+        TextView textView = headerView.findViewById(R.id.username);
+        textView.setText(mUser.getDisplayName());
+        View profileView;
+
+        //intent of floating action button
+        findViewById(R.id.floatingActionButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),PostActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override
