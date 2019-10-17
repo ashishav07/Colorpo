@@ -1,16 +1,20 @@
 package com.example.colorpo;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,36 +23,43 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import org.w3c.dom.Text;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ProfileFragment extends Fragment {
-    private TextView email,mobile;
-    private FirebaseUser mUser;
-    private String phone;
+    private TextView mobile;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private TextView posts;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.profile_fragment,container,false);
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
-        email = root.findViewById(R.id.email);
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        TextView email = root.findViewById(R.id.email);
+        TextView username = root.findViewById(R.id.username);
+        username.setText(mUser.getDisplayName());
+        posts = root.findViewById(R.id.posts);
         email.setText(mUser.getEmail());
         mobile = root.findViewById(R.id.mobile);
-        String userid=mUser.getUid();
-        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("Users");
-        rootRef.child(userid).addValueEventListener(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user1 = dataSnapshot.getValue(User.class);
-                Log.d("unique", "Value is: " + user1);
-                phone = user1.getMobile().toString();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-        mobile.setText(phone);
+        String userid= mUser.getUid();
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading Your Profile...");
+        progressDialog.show();
+        db.document("Users/" + userid).get()
+            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if(documentSnapshot.exists()){
+                        mobile.setText(documentSnapshot.getString("mobile"));
+                        posts.setText(documentSnapshot.getString("posts"));
+                    }
+                progressDialog.hide();
+                }
+            });
         return root;
     }
 }

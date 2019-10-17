@@ -2,11 +2,15 @@ package com.example.colorpo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,7 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -27,6 +34,9 @@ public class PostActivity extends AppCompatActivity {
     private EditText desc;
     private TextInputLayout subject_layout;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private ProgressDialog progressDialog;
+    private FirebaseUser mUser;
+    private String posts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +49,33 @@ public class PostActivity extends AppCompatActivity {
         });
         desc = findViewById(R.id.des);
         subject = findViewById(R.id.sub);
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         subject_layout = findViewById(R.id.subject_layout);
-
+        getSupportActionBar().setTitle("Create Post");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        progressDialog = new ProgressDialog(this);
+        if(progressDialog.isShowing())
+            progressDialog.hide();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void setPosts(String posts) {
+        int post = Integer.parseInt(posts);
+        post = post+1;
+        posts = Integer.toString(post);
+        db.collection("Users").document(mUser.getUid()).update("posts",posts);
+    }
+
     private void postContent() {
         subject_layout.setError(null);
         desc.setError(null);
@@ -53,23 +87,38 @@ public class PostActivity extends AppCompatActivity {
             desc.setError("Description is mandatory!");
             return;
         }
-        Map<String,Object> post = new HashMap<>();
-        post.put("subject",subject.getText().toString().trim());
-        post.put("description",desc.getText().toString().trim());
-        db.collection("Posts").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).set(post)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(PostActivity.this, "Post Created", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-                    }
-                })
+        progressDialog.setTitle("Posting");
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+        Map<String, Object> post = new HashMap<>();
+        post.put("subject", subject.getText().toString().trim());
+        post.put("description", desc.getText().toString().trim());
+        post.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        post.put("Name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        post.put("Likes",0);
+        db.collection("Users").document(mUser.getUid()).get()
+        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                posts = documentSnapshot.getString("posts");
+            }
+        });
+        db.collection("Posts").add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                setPosts(posts);
+                Toast.makeText(PostActivity.this, "Post Created", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                progressDialog.hide();
+            }
+        })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(PostActivity.this, "Error in creating Post", Toast.LENGTH_SHORT).show();
+                        progressDialog.hide();
                     }
-                })
-        ;
+                });
     }
+
 }

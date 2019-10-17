@@ -3,6 +3,7 @@ package com.example.colorpo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,18 +29,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private FirebaseUser user;
     private TextInputEditText etEmail,etPassword;
     private TextInputLayout temail,tepassword;
-    private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
         findViewById(R.id.register).setOnClickListener(this);
         findViewById(R.id.login).setOnClickListener(this);
         findViewById(R.id.forgot).setOnClickListener(this);
-        progressBar = findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.INVISIBLE);
+
         if(user!=null){
             Intent i = new Intent(this,HomeActivity.class);
             startActivity(i);
@@ -70,7 +71,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(!isValidEmail(email)){
 //            etEmail.setError("Enter Valid Email");
             temail.setError("E-Mail isn't valid");
-            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
         else {
@@ -79,32 +79,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(!isValidPassword(password)){
 //            etPassword.setError("Invalid password!");
             tepassword.setError("Invalid Password");
-            progressBar.setVisibility(View.INVISIBLE);
             return;
         }
         else {
             temail.setError(null);
         }
+        progressDialog.setTitle("Login");
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     user = mAuth.getCurrentUser();
                     if(user.isEmailVerified()) {
-
                         Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                        progressBar.setVisibility(View.INVISIBLE);
                     }
                     else{
-                        progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(),"Email Not Verified",Toast.LENGTH_LONG).show();
+                        progressDialog.hide();
                     }
                 }
                 else{
                     Toast.makeText(getApplicationContext(),task.getException().getMessage(),Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.INVISIBLE);
+                    progressDialog.hide();
                 }
                 etPassword.setText(null);
             }
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.login:
-                progressBar.setVisibility(View.VISIBLE);
+
                 userLogin();
                 break;
             case R.id.forgot :
