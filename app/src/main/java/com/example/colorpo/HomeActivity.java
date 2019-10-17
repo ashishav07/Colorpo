@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.sign_out:
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
-                myAlert.setTitle("Exit");
+                myAlert.setTitle("Sign Out");
                 myAlert.setMessage("Do you really want to Sign Out?");
                 myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override

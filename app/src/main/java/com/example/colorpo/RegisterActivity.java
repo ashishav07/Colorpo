@@ -11,12 +11,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,11 +34,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText pass1;
     private EditText email;
     private Button reg;
-    private User user;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,35 +131,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     }
                                 }
                             });
-                            
-                            user = new User(
-                                    fname.getText().toString().trim(),
-                                    lname.getText().toString().trim(),
-                                    phn,
-                                    email.getText().toString().trim()
-                            );
-                                    FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                    .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    progressBar.setVisibility(View.GONE);
-                                    if (task.isSuccessful()) {
-                                        fUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                Toast.makeText(getApplicationContext(),"Email Verification Sent",Toast.LENGTH_SHORT).show();
-                                                progressBar.setVisibility(View.INVISIBLE);
-                                                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                    }else {
-                                        Toast.makeText(RegisterActivity.this, "failure" , Toast.LENGTH_LONG).show();
-                                    }
+                                    //Firestore
+                                    String first = fname.getText().toString().trim();
+                                    String last = lname.getText().toString().trim();
+                                    String phone = phn.toString();
+                                    String eMail = email.getText().toString().trim();
+                                    Map<String,Object> user = new HashMap<>();
+                                    user.put("fname",first);
+                                    user.put("lname",last);
+                                    user.put("mobile",phone);
+                                    user.put("email",eMail);
+                                    db.collection("Users").document(fUser.getUid()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            fUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    Toast.makeText(getApplicationContext(),"Email Verification Sent",Toast.LENGTH_SHORT).show();
+                                                    FirebaseAuth.getInstance().signOut();
+                                                    Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                                                    startActivity(intent);
+                                                    progressBar.setVisibility(View.INVISIBLE);
+                                                }
+                                            });
+
+                                        }
+                                    });
+                                    //
                                 }
-                            });
-                        } else {
+                        else {
                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             email.setError("Email Already in use");
                             progressBar.setVisibility(View.GONE);
