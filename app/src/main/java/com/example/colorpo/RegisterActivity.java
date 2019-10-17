@@ -1,5 +1,6 @@
 package com.example.colorpo;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,14 +12,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -33,8 +32,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText pass;
     private EditText pass1;
     private EditText email;
-    private Button reg;
-    private ProgressBar progressBar;
     private FirebaseAuth mAuth;
     private FirebaseUser fUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,11 +43,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         lname = findViewById(R.id.lname);
         email = findViewById(R.id.email);
         mobile = findViewById(R.id.mobile);
-        reg = findViewById(R.id.reg);
+        Button reg = findViewById(R.id.reg);
         pass = findViewById(R.id.pass1);
         pass1 = findViewById(R.id.pass2);
-        progressBar = findViewById(R.id.progressbar);
-        progressBar.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
         reg.setOnClickListener(this);
 
@@ -113,13 +108,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             pass.setError("Invalid or Passwords do not match");
             return;
         }
-        
-        progressBar.setVisibility(View.VISIBLE);
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Register");
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.show();
+
         mAuth.createUserWithEmailAndPassword(email.getText().toString().trim(), pass.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Long phn = Long.parseLong(mobile.getText().toString().trim());
+                        long phn = Long.parseLong(mobile.getText().toString().trim());
                         if (task.isSuccessful()) {
                             fUser = mAuth.getCurrentUser();
                             UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(fname.getText().toString().trim() + " " + lname.getText().toString().trim()).build();
@@ -134,13 +133,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                     //Firestore
                                     String first = fname.getText().toString().trim();
                                     String last = lname.getText().toString().trim();
-                                    String phone = phn.toString();
+                                    String phone = Long.toString(phn);
                                     String eMail = email.getText().toString().trim();
                                     Map<String,Object> user = new HashMap<>();
                                     user.put("fname",first);
                                     user.put("lname",last);
                                     user.put("mobile",phone);
                                     user.put("email",eMail);
+                                    user.put("posts","0");
                                     db.collection("Users").document(fUser.getUid()).set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
@@ -151,7 +151,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                                     FirebaseAuth.getInstance().signOut();
                                                     Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
                                                     startActivity(intent);
-                                                    progressBar.setVisibility(View.INVISIBLE);
                                                 }
                                             });
 
@@ -162,7 +161,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         else {
                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             email.setError("Email Already in use");
-                            progressBar.setVisibility(View.GONE);
+                            progressDialog.hide();
                         }
                     }
                 });
