@@ -86,6 +86,7 @@
                 android:text="Done"
                 android:backgroundTint="@color/colorPrimary"
                 android:textColor="#ffffff"
+                android:inputType="number"
                 app:icon="@drawable/ic_done"
                 />
 
