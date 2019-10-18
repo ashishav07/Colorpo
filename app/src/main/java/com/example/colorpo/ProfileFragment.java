@@ -53,7 +53,7 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-        root.findViewById(R.id.request).setOnClickListener(new View.OnClickListener() {
+        root.findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 view.getContext().startActivity(intent);
