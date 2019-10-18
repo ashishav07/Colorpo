@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".EditProfile"
+    tools:context=".EditProfileActivity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal">
@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_weight="0.15"></RelativeLayout>
+        android:layout_weight="0.15"/>
 
     <RelativeLayout
         android:layout_width="0dip"
@@ -83,7 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Done"
+                android:text="Update"
+                android:id="@+id/update"
                 android:backgroundTint="@color/colorPrimary"
                 android:textColor="#ffffff"
                 android:inputType="number"

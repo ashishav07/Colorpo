@@ -11,7 +11,6 @@
         android:background="@color/graylight"
         android:orientation="vertical"
         tools:context=".ProfileFragment">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="405dp">
@@ -22,7 +21,7 @@
                 android:background="@drawable/gradient_background"
                 android:orientation="vertical">
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/edit"
                     android:layout_width="42dp"
                     android:layout_height="42dp"
@@ -37,8 +36,7 @@
                     android:contentDescription="@string/edit_profile"
                     android:focusable="true"
                     android:padding="4dp"
-                    android:src="@drawable/ic_edit"
-                    android:tooltipText="Edit Your Profile" />
+                    android:src="@drawable/ic_edit" />
 
                 <ImageView
                     android:id="@+id/user_image"

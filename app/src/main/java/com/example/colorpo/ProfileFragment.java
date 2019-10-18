@@ -3,47 +3,36 @@ package com.example.colorpo;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.w3c.dom.Text;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class ProfileFragment extends Fragment {
     private TextView mobile;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView posts;
-    private ImageView edit;
+    private Intent intent;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.profile_fragment,container,false);
+        final ViewGroup root = (ViewGroup) inflater.inflate(R.layout.profile_fragment,container,false);
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         TextView email = root.findViewById(R.id.email);
         TextView username = root.findViewById(R.id.username);
+        intent = new Intent(getActivity(),EditProfileActivity.class);
         username.setText(mUser.getDisplayName());
         posts = root.findViewById(R.id.posts);
         email.setText(mUser.getEmail());
@@ -64,15 +53,13 @@ public class ProfileFragment extends Fragment {
                 }
             });
 
-        // Edit Profile Button
-        edit = root.findViewById(R.id.edit);
-        edit.setOnClickListener(new View.OnClickListener() {
+        root.findViewById(R.id.request).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), EditProfile.class);
-                startActivity(i);
+                view.getContext().startActivity(intent);
             }
         });
+
 
         return root;
     }
