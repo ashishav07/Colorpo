@@ -1,11 +1,13 @@
 package com.example.colorpo;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class ProfileFragment extends Fragment {
     private TextView mobile;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView posts;
+    private ImageView edit;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,6 +63,17 @@ public class ProfileFragment extends Fragment {
                 progressDialog.hide();
                 }
             });
+
+        // Edit Profile Button
+        edit = root.findViewById(R.id.edit);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), EditProfile.class);
+                startActivity(i);
+            }
+        });
+
         return root;
     }
 }

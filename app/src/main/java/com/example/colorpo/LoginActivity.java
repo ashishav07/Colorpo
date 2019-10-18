@@ -45,6 +45,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent i = new Intent(this,HomeActivity.class);
             startActivity(i);
         }
+
+        // Hide action bar
+        if (getSupportActionBar()!=null)
+        getSupportActionBar().hide();
     }
     private boolean isValidEmail(String email) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"

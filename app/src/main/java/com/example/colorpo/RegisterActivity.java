@@ -49,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mAuth = FirebaseAuth.getInstance();
         reg.setOnClickListener(this);
 
+        // Hide action bar
+        getSupportActionBar().hide();
+
     }
 
     private boolean isValidEmail(String email) {
