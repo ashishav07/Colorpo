@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -20,6 +21,8 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot);
         findViewById(R.id.forgot).setOnClickListener(this);
+        if (getSupportActionBar()!=null) {
+            getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Reset your password</font>"));        }
     }
 
     @Override
