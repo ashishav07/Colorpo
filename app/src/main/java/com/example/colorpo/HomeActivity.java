@@ -57,7 +57,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         View headerView = navigateView.getHeaderView(0);
         TextView textView = headerView.findViewById(R.id.username);
         textView.setText(mUser.getDisplayName());
-        View profileView;
 
         //intent of floating action button
         findViewById(R.id.floatingActionButton).setOnClickListener(new View.OnClickListener() {
@@ -84,7 +83,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     moveTaskToBack(true);
                     android.os.Process.killProcess(android.os.Process.myPid());
                     System.exit(1);
-//                    finish();
                 }
             });
             myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -108,6 +106,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.about:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+                break;
+            case R.id.contact:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ContactFragment()).commit();
                 break;
             case R.id.exitApp:
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);

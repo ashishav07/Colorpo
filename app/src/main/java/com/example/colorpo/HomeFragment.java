@@ -16,8 +16,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.home_fragment,container,false);
-        t1 = root.findViewById(R.id.home_text);
-        t1.setText("ABC");
         return root;
     }
 }

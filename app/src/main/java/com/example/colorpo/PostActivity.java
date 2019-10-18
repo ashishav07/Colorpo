@@ -87,6 +87,7 @@ public class PostActivity extends AppCompatActivity {
             desc.setError("Description is mandatory!");
             return;
         }
+        long time = System.currentTimeMillis()/1000;
         progressDialog.setTitle("Posting");
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
@@ -96,6 +97,7 @@ public class PostActivity extends AppCompatActivity {
         post.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
         post.put("Name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         post.put("Likes",0);
+        post.put("timestamp", Long.toString(time));
         db.collection("Users").document(mUser.getUid()).get()
         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

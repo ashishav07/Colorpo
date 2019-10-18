@@ -59,8 +59,6 @@ public class ProfileFragment extends Fragment {
                 view.getContext().startActivity(intent);
             }
         });
-
-
         return root;
     }
 }

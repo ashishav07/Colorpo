@@ -29,6 +29,7 @@
                 android:contentDescription="@string/profile_picture"
                 android:minWidth="200dp"
                 android:minHeight="200dp"
+                android:id="@+id/user_image"
                 android:src="@drawable/ic_profile" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -94,9 +95,8 @@
         </LinearLayout>
 
     </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_weight="0.15"></RelativeLayout>
+        android:layout_weight="0.15"/>
 </LinearLayout>
