@@ -193,6 +193,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:text="username@gmail.com"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:id="@+id/email"
                     />
@@ -220,24 +221,22 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:text=""
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     android:id="@+id/mobile"
                     />
             </LinearLayout>
         </LinearLayout>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:layout_marginTop="35dp"
-            android:layout_marginBottom="8dp"
-            android:paddingStart="6dp"
-            android:paddingEnd="6dp"
-            android:background="@drawable/buttonshape"
-            android:text="Request More Information"
-            android:textColor="#fff"
             android:id="@+id/request"
+            android:text="Request more information"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="#ffffff"
             />
 
     </LinearLayout>

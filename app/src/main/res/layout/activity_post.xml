@@ -47,21 +47,17 @@
         android:paddingRight="10dp"
         android:background="@drawable/textinputborder"
         android:importantForAutofill="no" />
-    <Button
-        android:id="@+id/post"
-        android:text="@string/post"
-        android:textColor="#FFFFFF"
-        android:layout_width="167dp"
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/buttonshape"
-        android:shadowColor="#A8A8A8"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="42dp"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5"
+        android:id="@+id/post"
         android:layout_gravity="center"
+        android:layout_marginTop="42dp"
+        android:text="@string/post"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="#ffffff"
+        android:minWidth="115dp"
         />
 
 </LinearLayout>

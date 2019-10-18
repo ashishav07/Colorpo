@@ -23,15 +23,15 @@
             android:id="@+id/email"
             />
     </com.google.android.material.textfield.TextInputLayout>
-    <Button
+
+    <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/send_reset_password_link"
-        android:layout_marginTop="10dp"
-        android:padding="5dp"
-        android:background="@drawable/buttonshape"
-        android:textColor="#FFFFFF"
         android:id="@+id/forgot"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="@string/send_reset_password_link"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="#ffffff"
         />
 </LinearLayout>
