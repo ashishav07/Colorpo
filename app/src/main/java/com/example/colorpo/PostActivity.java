@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -105,6 +106,7 @@ public class PostActivity extends AppCompatActivity {
         post.put("Name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         post.put("Likes",0);
         post.put("timestamp", Long.toString(time));
+        post.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid());
         db.collection("Users").document(mUser.getUid()).get()
         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
