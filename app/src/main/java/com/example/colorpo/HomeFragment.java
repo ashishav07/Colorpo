@@ -1,5 +1,6 @@
 package com.example.colorpo;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,9 @@ public class HomeFragment extends Fragment {
         return root;
     }
     private void loadDataFromDatabase(){
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading your data...");
+        progressDialog.show();
         if(postArrayList.size()>0){
             postArrayList.clear();
         }
@@ -58,6 +62,7 @@ public class HomeFragment extends Fragment {
                             }
                             PostAdapter postAdapter = new PostAdapter(getActivity(),postArrayList);
                             recyclerView.setAdapter(postAdapter);
+                            progressDialog.hide();
                         }
                     });
 
