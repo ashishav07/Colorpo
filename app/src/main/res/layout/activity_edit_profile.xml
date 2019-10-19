@@ -29,6 +29,7 @@
                 android:contentDescription="@string/profile_picture"
                 android:minWidth="200dp"
                 android:minHeight="200dp"
+                android:background="@drawable/rounded_ripple"
                 android:id="@+id/user_image"
                 android:src="@drawable/ic_profile" />
 

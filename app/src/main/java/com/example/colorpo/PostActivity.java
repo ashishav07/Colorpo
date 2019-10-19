@@ -7,6 +7,8 @@ import androidx.core.app.NavUtils;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -51,17 +53,22 @@ public class PostActivity extends AppCompatActivity {
         subject = findViewById(R.id.sub);
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         subject_layout = findViewById(R.id.subject_layout);
-        getSupportActionBar().setTitle("Create Post");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Create Post</font>"));
         progressDialog = new ProgressDialog(this);
         if(progressDialog.isShowing())
             progressDialog.hide();
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.home:
+            case android.R.id.home:
                 onBackPressed();
                 return true;
             default:

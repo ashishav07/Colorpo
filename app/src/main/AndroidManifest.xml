@@ -22,8 +22,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeActivity" />
         </activity>
-        <activity android:name=".EditProfileActivity"
-            android:theme="@style/AppTheme"/>
+        <activity android:name=".EditProfileActivity"/>
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
