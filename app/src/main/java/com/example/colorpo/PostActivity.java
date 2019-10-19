@@ -104,9 +104,10 @@ public class PostActivity extends AppCompatActivity {
         post.put("description", desc.getText().toString().trim());
         post.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
         post.put("Name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-        post.put("Likes",0);
+        post.put("Likes","0");
         post.put("timestamp", Long.toString(time));
         post.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid());
+        post.put("name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         db.collection("Users").document(mUser.getUid()).get()
         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
