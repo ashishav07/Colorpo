@@ -83,7 +83,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-
         findViewById(R.id.update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,8 +101,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
                                 }
-                            })
-                    ;
+                            });
                 }
                 Map<String, Object> data = new HashMap<>();
                 data.put("fname", fname);
