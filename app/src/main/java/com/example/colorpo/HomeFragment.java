@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -60,7 +61,8 @@ public class HomeFragment extends Fragment {
                                         querySnapshot.getString("email"),
                                         querySnapshot.getString("id"),
                                         querySnapshot.getString("timestamp"),
-                                        querySnapshot.getString("dp")
+                                        querySnapshot.getString("dp"),
+                                        ""
                                 );
                                 postArrayList.add(post);
                             }

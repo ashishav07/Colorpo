@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
     public ImageView userImage;
-    public TextView username,subject,description,time;
+    public TextView username,subject,description,time,cdesc;
     public Button like,contact;
     public PostViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -21,5 +21,6 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         time = itemView.findViewById(R.id.time);
         like = itemView.findViewById(R.id.like);
         contact = itemView.findViewById(R.id.contact);
+        cdesc = itemView.findViewById(R.id.content_desc);
     }
 }

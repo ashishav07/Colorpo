@@ -20,8 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="15dp"
-            android:text="Subject"
-            android:textSize="25sp"
+            android:text="@string/subject"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <RelativeLayout
@@ -34,6 +34,7 @@
                 android:layout_width="90dp"
                 android:layout_height="90dp"
                 android:layout_marginBottom="30dp"
+                android:layout_marginEnd="5dp"
                 android:contentDescription="@string/profile_picture"
                 android:minWidth="150dp"
                 android:minHeight="150dp"
@@ -43,12 +44,20 @@
                 android:src="@drawable/ic_profile"  />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/content_desc"
+                android:layout_toEndOf="@id/user_image"
+                android:textSize="18sp"
+                android:layout_below="@id/time"/>
+
+            <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/user_image"
                 android:text=" Ashish Vyas"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 />
 
@@ -58,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/username"
                 android:text=" updated a post on "
-                android:textSize="20sp"
+                android:textSize="18sp"
                 />
 
             <TextView
@@ -66,8 +75,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/up"
-                android:layout_toRightOf="@+id/user_image"
-                android:textSize="20sp"
+                android:layout_toEndOf="@+id/user_image"
+                android:textSize="18sp"
                 />
         </RelativeLayout>
 
@@ -76,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Description" />
+            android:text="@string/description" />
 
         <LinearLayout
             android:layout_width="match_parent"
