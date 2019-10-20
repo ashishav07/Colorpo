@@ -1,19 +1,15 @@
 package com.example.colorpo;
 
 import android.content.Context;
-import android.net.Uri;
+import com.bumptech.glide.Glide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 
@@ -41,8 +37,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         holder.description.setText(postArrayList.get(position).getDescription());
         holder.time.setText(postArrayList.get(position).getTime());
         holder.username.setText(postArrayList.get(position).getName());
-
-        Picasso.get().load(Uri.parse(postArrayList.get(position).getDp())).into(holder.userImage);
+        Glide.with(context)
+                .load(postArrayList.get(position).getDp()).into(holder.userImage);
     }
 
     @Override

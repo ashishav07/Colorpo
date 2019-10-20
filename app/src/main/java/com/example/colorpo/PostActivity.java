@@ -118,7 +118,6 @@ public class PostActivity extends AppCompatActivity {
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
 
-
         Map<String, Object> post = new HashMap<>();
         post.put("subject", subject.getText().toString().trim());
         post.put("description", desc.getText().toString().trim());
