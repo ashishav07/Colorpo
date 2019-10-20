@@ -2,7 +2,10 @@ package com.example.colorpo;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +19,18 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ProfileFragment extends Fragment {
     private TextView mobile;
+    private ImageView imageView;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private TextView posts;
     private Intent intent;
+    private StorageReference ref;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -32,8 +38,10 @@ public class ProfileFragment extends Fragment {
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         TextView email = root.findViewById(R.id.email);
         TextView username = root.findViewById(R.id.username);
+        ref = FirebaseStorage.getInstance().getReference().child("images/" + mUser.getUid());
         intent = new Intent(getActivity(),EditProfileActivity.class);
         username.setText(mUser.getDisplayName());
+        imageView = root.findViewById(R.id.user_image);
         posts = root.findViewById(R.id.posts);
         email.setText(mUser.getEmail());
         mobile = root.findViewById(R.id.mobile);
@@ -49,10 +57,20 @@ public class ProfileFragment extends Fragment {
                         mobile.setText(documentSnapshot.getString("mobile"));
                         posts.setText(documentSnapshot.getString("posts"));
                     }
-                progressDialog.hide();
                 }
             });
-
+        final long ONE_MEGABYTE = 1024*1024;
+        ref.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                        DisplayMetrics dm = new DisplayMetrics();
+                        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+                        imageView.setImageBitmap(bm);
+                        progressDialog.hide();
+                    }
+                });
         root.findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

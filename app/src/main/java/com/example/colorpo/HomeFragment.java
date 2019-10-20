@@ -1,7 +1,9 @@
 package com.example.colorpo;
 
 import android.app.ProgressDialog;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -26,6 +31,8 @@ public class HomeFragment extends Fragment {
     ArrayList<Post> postArrayList;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     RecyclerView recyclerView;
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference ref = storage.getReference();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,8 +46,9 @@ public class HomeFragment extends Fragment {
     }
     private void loadDataFromDatabase(){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Loading your data...");
+        progressDialog.setMessage("Loading your timeline...");
         progressDialog.show();
+
         if(postArrayList.size()>0){
             postArrayList.clear();
         }

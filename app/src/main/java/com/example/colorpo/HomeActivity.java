@@ -9,15 +9,21 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,13 +33,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
+    private ProgressDialog progressDialog;
+    private StorageReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        ref = FirebaseStorage.getInstance().getReference().child("images/"+mUser.getUid());
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading your timeline...");
+        progressDialog.show();
 
         // To show the button of navigation drawer
         setContentView(R.layout.activity_home);
@@ -50,14 +65,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         navigationView.getMenu().getItem(4).setCheckable(false); //Exit button is not checkable
         navigationView.getMenu().getItem(0).setChecked(true);  //Home button is default
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
-        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
         // dynamic username in navigation header
         NavigationView navigateView = findViewById(R.id.nav_view);
         View headerView = navigateView.getHeaderView(0);
         TextView textView = headerView.findViewById(R.id.username);
+        final ImageView imageView = headerView.findViewById(R.id.user_image);
         textView.setText(mUser.getDisplayName());
-
+        final long ONE_MEGABYTE = 1024*1024;
+        ref.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                        DisplayMetrics dm = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(dm);
+                        imageView.setImageBitmap(bm);
+                        progressDialog.hide();
+                    }
+                });
         //intent of floating action button
         findViewById(R.id.floatingActionButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,10 +190,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
                 myAlert.show();
-                break;
-            case R.id.search:
-                // Put search code here
-                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;

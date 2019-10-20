@@ -33,5 +33,6 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="user_image">User Image</string>
     <string name="profile_picture">Profile picture</string>
+    <string name="home">Home</string>
 
 </resources>

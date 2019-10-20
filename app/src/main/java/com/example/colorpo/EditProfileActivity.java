@@ -7,23 +7,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,8 +46,10 @@ public class EditProfileActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private ImageView imageView;
     private Uri filePath = null;
+    private Task<Uri> imgURL = null;
+    private FirebaseUser mUser;
     private FirebaseStorage storage;
-    private StorageReference storageReference;
+    private StorageReference storageReference, ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +58,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // Back button in action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // Firebase init
+        mUser = FirebaseAuth.getInstance().getCurrentUser();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
@@ -55,14 +68,13 @@ public class EditProfileActivity extends AppCompatActivity {
         phone = findViewById(R.id.mobile);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get()
+        db.collection("Users").document(mUser.getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         firstName.setText(documentSnapshot.getString("fname"));
                         lastName.setText(documentSnapshot.getString("lname"));
                         phone.setText(documentSnapshot.getString("mobile"));
-                        progressDialog.hide();
                     }
                 });
         imageView = findViewById(R.id.user_image);
@@ -76,6 +88,21 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Get image from Firebase
+        ref = storageReference.child("images/" + mUser.getUid());
+        final long ONE_MEGABYTE = 1024*1024;
+        ref.getBytes(ONE_MEGABYTE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                        DisplayMetrics dm = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(dm);
+                        imageView.setImageBitmap(bm);
+                        progressDialog.hide();
+                    }
+                });
+
         findViewById(R.id.update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +114,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 if (filePath != null) {
                     StorageReference reference = storageReference
-                            .child("images/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            .child("images/" + mUser.getUid());
                     reference.putFile(filePath)
                             .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                 @Override
@@ -100,14 +127,14 @@ public class EditProfileActivity extends AppCompatActivity {
                 data.put("fname", fname);
                 data.put("lname", lname);
                 data.put("mobile", mobile);
-                db.collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                db.collection("Users").document(mUser.getUid())
                         .update(data)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                         .setDisplayName(fname + " " + lname).build();
-                                FirebaseAuth.getInstance().getCurrentUser().updateProfile(profileUpdates);
+                                mUser.updateProfile(profileUpdates);
                                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                                 progressDialog.hide();
                             }
@@ -134,7 +161,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
