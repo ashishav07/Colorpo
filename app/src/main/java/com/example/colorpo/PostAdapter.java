@@ -1,6 +1,7 @@
 package com.example.colorpo;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -39,24 +41,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         holder.description.setText(postArrayList.get(position).getDescription());
         holder.time.setText(postArrayList.get(position).getTime());
         holder.username.setText(postArrayList.get(position).getName());
+
+        Picasso.get().load(Uri.parse(postArrayList.get(position).getDp())).into(holder.userImage);
     }
 
     @Override
     public int getItemCount() {
         return postArrayList.size();
-    }
-    public int getDatabaseCount(){
-        final int[] count = new int[1];
-        db.collection("Posts")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            count[0] = task.getResult().size();
-                        }
-                    }
-                });
-        return count[0];
     }
 }

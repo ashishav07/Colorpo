@@ -2,9 +2,9 @@ package com.example.colorpo;
 
 public class Post {
 
-    private String subject,description,name,likes,email,id,time;
+    private String subject,description,name,likes,email,id,time,dp;
 
-    public Post(String subject, String description, String name, String likes, String email, String id, String time) {
+    public Post(String subject, String description, String name, String likes, String email, String id, String time,String dp) {
         this.subject = subject;
         this.description = description;
         this.name = name;
@@ -12,6 +12,15 @@ public class Post {
         this.email = email;
         this.id = id;
         this.time = time;
+        this.dp = dp;
+    }
+
+    public String getDp() {
+        return dp;
+    }
+
+    public void setDp(String dp) {
+        this.dp = dp;
     }
 
     public String getSubject() {

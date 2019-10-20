@@ -1,14 +1,10 @@
 package com.example.colorpo;
 
 import android.app.ProgressDialog;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,12 +22,11 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
-    TextView t1;
-    ArrayList<Post> postArrayList;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    RecyclerView recyclerView;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference ref = storage.getReference();
+    private ArrayList<Post> postArrayList;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private RecyclerView recyclerView;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference ref = storage.getReference();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,7 +59,9 @@ public class HomeFragment extends Fragment {
                                         querySnapshot.getString("Likes"),
                                         querySnapshot.getString("email"),
                                         querySnapshot.getString("id"),
-                                        querySnapshot.getString("timestamp"));
+                                        querySnapshot.getString("timestamp"),
+                                        querySnapshot.getString("dp")
+                                );
                                 postArrayList.add(post);
                             }
                             PostAdapter postAdapter = new PostAdapter(getActivity(),postArrayList);

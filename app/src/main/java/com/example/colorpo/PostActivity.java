@@ -6,6 +6,7 @@ import androidx.core.app.NavUtils;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.KeyEvent;
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,6 +42,9 @@ public class PostActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseUser mUser;
     private String posts;
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private StorageReference ref;
+    private String dp = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,13 @@ public class PostActivity extends AppCompatActivity {
         desc = findViewById(R.id.des);
         subject = findViewById(R.id.sub);
         mUser = FirebaseAuth.getInstance().getCurrentUser();
+        ref = firebaseStorage.getReferenceFromUrl("gs://colorpo-6fb15.appspot.com/").child("images/" + mUser.getUid());
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                dp = uri.toString();
+            }
+        });
         subject_layout = findViewById(R.id.subject_layout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Create Post</font>"));
@@ -108,6 +120,7 @@ public class PostActivity extends AppCompatActivity {
         post.put("timestamp", Long.toString(time));
         post.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid());
         post.put("name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        post.put("dp",dp);
         db.collection("Users").document(mUser.getUid()).get()
         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
