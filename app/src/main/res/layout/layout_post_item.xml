@@ -65,7 +65,8 @@
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/up"
+                android:layout_below="@+id/up"
+                android:layout_toRightOf="@+id/user_image"
                 android:textSize="20sp"
                 />
         </RelativeLayout>

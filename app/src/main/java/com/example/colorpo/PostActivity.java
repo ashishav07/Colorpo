@@ -1,12 +1,14 @@
 package com.example.colorpo;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.KeyEvent;
@@ -31,6 +33,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -95,7 +100,6 @@ public class PostActivity extends AppCompatActivity {
         posts = Integer.toString(post);
         db.collection("Users").document(mUser.getUid()).update("posts",posts);
     }
-
     private void postContent() {
         subject_layout.setError(null);
         desc.setError(null);
@@ -107,17 +111,21 @@ public class PostActivity extends AppCompatActivity {
             desc.setError("Description is mandatory!");
             return;
         }
-        long time = System.currentTimeMillis()/1000;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+        String currentDateandTime = sdf.format(new Date());
+
         progressDialog.setTitle("Posting");
         progressDialog.setMessage("Please Wait...");
         progressDialog.show();
+
+
         Map<String, Object> post = new HashMap<>();
         post.put("subject", subject.getText().toString().trim());
         post.put("description", desc.getText().toString().trim());
         post.put("email",FirebaseAuth.getInstance().getCurrentUser().getEmail());
         post.put("Name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         post.put("Likes","0");
-        post.put("timestamp", Long.toString(time));
+        post.put("timestamp", currentDateandTime);
         post.put("id", FirebaseAuth.getInstance().getCurrentUser().getUid());
         post.put("name",FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
         post.put("dp",dp);
