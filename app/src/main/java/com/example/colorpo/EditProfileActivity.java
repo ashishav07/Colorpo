@@ -125,6 +125,8 @@ public class EditProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                                    progressDialog.hide();
                                 }
                             });
                 }
@@ -140,8 +142,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                         .setDisplayName(fname + " " + lname).build();
                                 mUser.updateProfile(profileUpdates);
-                                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                                progressDialog.hide();
+
                             }
                         });
             }
@@ -149,13 +150,6 @@ public class EditProfileActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Edit Profile</font>"));
         }
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
     }
 
     @Override

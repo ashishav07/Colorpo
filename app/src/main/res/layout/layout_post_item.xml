@@ -56,27 +56,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/user_image"
-                android:text=" Ashish Vyas"
-                android:textSize="18sp"
-                android:textStyle="bold"
                 />
-
             <TextView
-                android:id="@+id/up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/username"
-                android:text=" updated a post on "
-                android:textSize="18sp"
+                android:id="@+id/id"
+                android:visibility="gone"
                 />
+
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/up"
                 android:layout_toEndOf="@+id/user_image"
-                android:textSize="18sp"
                 />
         </RelativeLayout>
 
@@ -84,7 +77,6 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
             android:text="@string/description" />
 
         <LinearLayout
