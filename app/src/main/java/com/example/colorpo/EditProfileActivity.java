@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -98,7 +100,10 @@ public class EditProfileActivity extends AppCompatActivity {
                         Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                         DisplayMetrics dm = new DisplayMetrics();
                         getWindowManager().getDefaultDisplay().getMetrics(dm);
-                        imageView.setImageBitmap(bm);
+                      //  Picasso.get().load(getImageUri(getApplicationContext(), bm)).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
+                        CircleTransform tr = new CircleTransform();
+                        Bitmap b = tr.transform(bm);
+                        imageView.setImageBitmap(b);
                         progressDialog.hide();
                     }
                 });
@@ -144,6 +149,13 @@ public class EditProfileActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Edit Profile</font>"));
         }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 
     @Override

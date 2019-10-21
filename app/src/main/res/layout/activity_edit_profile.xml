@@ -23,8 +23,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="250dp"
-                android:layout_height="300dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="30dp"
                 android:contentDescription="@string/profile_picture"
                 android:minWidth="150dp"
@@ -87,6 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
                 android:text="Update"
                 android:id="@+id/update"
                 android:backgroundTint="@color/colorPrimary"

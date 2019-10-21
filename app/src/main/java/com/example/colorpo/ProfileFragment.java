@@ -1,10 +1,13 @@
 package com.example.colorpo;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
 
 public class ProfileFragment extends Fragment {
     private TextView mobile;
@@ -67,7 +73,10 @@ public class ProfileFragment extends Fragment {
                         Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
                         DisplayMetrics dm = new DisplayMetrics();
                         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-                        imageView.setImageBitmap(bm);
+                  //      Picasso.get().load(getImageUri(getActivity(), bm)).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
+                        CircleTransform tr = new CircleTransform();
+                        Bitmap b = tr.transform(bm);
+                        imageView.setImageBitmap(b);
                         progressDialog.hide();
                     }
                 });
@@ -78,5 +87,11 @@ public class ProfileFragment extends Fragment {
             }
         });
         return root;
+    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
     }
 }

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.ArrayList;
@@ -40,10 +41,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         holder.description.setText(postArrayList.get(position).getDescription());
         holder.time.setText(postArrayList.get(position).getTime());
         holder.username.setText(postArrayList.get(position).getName());
+
         String st = "<b>"+postArrayList.get(position).getName()+"</b>"+" updated a post on "+postArrayList.get(position).getTime();
         holder.cdesc.setText(Html.fromHtml(st));
-        Glide.with(context)
-                .load(postArrayList.get(position).getDp()).into(holder.userImage);
+        //Glide.with(context)
+          //      .load(postArrayList.get(position).getDp()).into(holder.userImage);
+        Picasso.get().load(postArrayList.get(position).getDp()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(holder.userImage);
     }
 
     @Override
