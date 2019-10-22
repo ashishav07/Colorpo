@@ -67,7 +67,8 @@ public class PostActivity extends AppCompatActivity {
         ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                dp = uri.toString();
+                while (dp ==null)
+                    dp = uri.toString();
             }
         });
         subject_layout = findViewById(R.id.subject_layout);
@@ -139,7 +140,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentReference documentReference) {
                 setPosts(posts);
-                Toast.makeText(PostActivity.this, "Post Created", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PostActivity.this, dp, Toast.LENGTH_SHORT);
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 progressDialog.hide();
             }

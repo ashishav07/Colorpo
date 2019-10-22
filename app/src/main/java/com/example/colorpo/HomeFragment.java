@@ -1,12 +1,9 @@
 package com.example.colorpo;
-
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -20,9 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.util.ArrayList;
-
 public class HomeFragment extends Fragment{
     private ArrayList<Post> postArrayList;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -40,7 +35,8 @@ public class HomeFragment extends Fragment{
         loadDataFromDatabase();
         return root;
     }
-    private void loadDataFromDatabase(){
+
+    public void loadDataFromDatabase(){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Loading your timeline...");
         progressDialog.show();
@@ -72,6 +68,5 @@ public class HomeFragment extends Fragment{
                             progressDialog.hide();
                         }
                     });
-
     }
 }

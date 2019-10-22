@@ -1,13 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DescribedPostActivity">
-<ImageView
-    android:layout_width="wrap_content"
+    tools:context=".DescribedPostActivity"
+    android:orientation="vertical">
+    <TextView
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/user_image"
+    android:textStyle="bold"
+    android:textSize="30sp"
+    android:id="@+id/subject"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="3dp"
+    android:hint="subject"
     />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_desc"
+        android:textColor="#878787"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="3dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#a9a9a9"
+        android:layout_marginTop="5dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/description"
+        android:textStyle="bold"
+        android:layout_margin="15dp"
+        android:hint="Description"
+        />
 </LinearLayout>

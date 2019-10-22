@@ -55,15 +55,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bitmap b = ((BitmapDrawable)holder.userImage.getDrawable()).getBitmap();
-                b.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-                final byte[] byteArray = byteArrayOutputStream.toByteArray();
                 Intent intent = new Intent(context,DescribedPostActivity.class);
                 intent.putExtra("username",holder.username.getText());
                 intent.putExtra("description",holder.description.getText());
                 intent.putExtra("time",holder.time.getText());
                 intent.putExtra("subject",holder.subject.getText());
-                intent.putExtra("id",holder.id.getText());
                 context.startActivity(intent);
             }
         });
