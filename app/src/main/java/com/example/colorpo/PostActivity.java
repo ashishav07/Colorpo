@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -136,11 +137,12 @@ public class PostActivity extends AppCompatActivity {
                 posts = documentSnapshot.getString("posts");
             }
         });
-        db.collection("Posts").add(post).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        String id = db.collection("Posts").document().getId();
+        post.put("Pid",id);
+        db.collection("Posts").document(id).set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onSuccess(DocumentReference documentReference) {
+            public void onSuccess(Void aVoid) {
                 setPosts(posts);
-                Toast.makeText(PostActivity.this, dp, Toast.LENGTH_SHORT);
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 progressDialog.hide();
             }

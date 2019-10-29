@@ -59,7 +59,8 @@ public class HomeFragment extends Fragment{
                                         querySnapshot.getString("id"),
                                         querySnapshot.getString("timestamp"),
                                         querySnapshot.getString("dp"),
-                                        ""
+                                        "",
+                                        querySnapshot.getString("Pid")
                                 );
                                 postArrayList.add(post);
                             }

@@ -52,7 +52,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         ref = FirebaseStorage.getInstance().getReference().child("images/"+mUser.getUid());
         progressDialog = new ProgressDialog(this);

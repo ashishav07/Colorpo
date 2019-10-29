@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PostViewHolder extends RecyclerView.ViewHolder {
     public ImageView userImage;
     private final Context context;
-    public TextView username,subject,description,time,cdesc,id;
+    public TextView likes,username,subject,description,time,cdesc,id,Pid;
     public Button like,contact;
     public PostViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -26,6 +26,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         contact = itemView.findViewById(R.id.contact);
         cdesc = itemView.findViewById(R.id.content_desc);
         id = itemView.findViewById(R.id.id);
+        likes = itemView.findViewById(R.id.likes);
+        Pid = itemView.findViewById(R.id.Pid);
     }
 
 }

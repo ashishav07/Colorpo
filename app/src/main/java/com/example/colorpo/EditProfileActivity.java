@@ -125,7 +125,6 @@ public class EditProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                                     progressDialog.hide();
                                 }
                             });

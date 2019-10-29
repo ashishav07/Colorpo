@@ -2,9 +2,17 @@ package com.example.colorpo;
 
 public class Post {
 
-    private String subject, description, name, likes, email, id, time, dp, cdesc;
+    private String subject, description, name, likes, email, id, time, dp, cdesc,Pid;
 
-    public Post(String subject, String description, String name, String likes, String email, String id, String time, String dp, String cdesc) {
+    public String getPid() {
+        return Pid;
+    }
+
+    public void setPid(String pid) {
+        Pid = pid;
+    }
+
+    public Post(String subject, String description, String name, String likes, String email, String id, String time, String dp, String cdesc, String Pid) {
         this.subject = subject;
         this.description = description;
         this.name = name;
@@ -14,6 +22,7 @@ public class Post {
         this.time = time;
         this.dp = dp;
         this.cdesc = cdesc;
+        this.Pid = Pid;
     }
 
     public String getCdesc() {
