@@ -47,17 +47,12 @@ import java.io.ByteArrayOutputStream;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawer;
-    private ProgressDialog progressDialog;
     private StorageReference ref;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         ref = FirebaseStorage.getInstance().getReference().child("images/"+mUser.getUid());
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading your timeline...");
-        progressDialog.show();
-
         // To show the button of navigation drawer
         setContentView(R.layout.activity_home);
         drawer = findViewById(R.id.drawer_layout);
@@ -96,7 +91,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         CircleTransform tr = new CircleTransform();
                         Bitmap b = tr.transform(bm);
                         imageView.setImageBitmap(b);
-                        progressDialog.hide();
                     }
                 });
         //intent of floating action button
