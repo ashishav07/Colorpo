@@ -124,7 +124,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 public void onClick(DialogInterface dialogInterface, int i) {
                     moveTaskToBack(true);
                     android.os.Process.killProcess(android.os.Process.myPid());
-                    System.exit(1);
+//                    System.exit(1);
                 }
             });
             myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {

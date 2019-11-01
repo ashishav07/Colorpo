@@ -15,6 +15,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    //Splash screen style
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
     <style name="HintText" parent="TextAppearance.Design.Hint">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/colorPrimary</item>
