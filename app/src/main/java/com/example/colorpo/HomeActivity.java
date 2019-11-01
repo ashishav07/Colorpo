@@ -48,10 +48,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer;
     private StorageReference ref;
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+        intent = getIntent();
         ref = FirebaseStorage.getInstance().getReference().child("images/"+mUser.getUid());
         // To show the button of navigation drawer
         setContentView(R.layout.activity_home);
@@ -64,7 +66,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // To handle clicks on navigation menu items
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(4).setCheckable(false); //Exit button is not checkable
+        navigationView.getMenu().getItem(5).setCheckable(false); //Exit button is not checkable
         navigationView.getMenu().getItem(0).setChecked(true);  //Home button is default
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
@@ -115,7 +117,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-//            super.onBackPressed();
             AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
             myAlert.setTitle("Exit");
             myAlert.setMessage("Do you want to exit?");
@@ -152,6 +153,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.contact:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ContactFragment()).commit();
                 break;
+            case R.id.myPosts:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MyPostsFragment()).commit();
+                break;
             case R.id.exitApp:
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
                 myAlert.setTitle("Exit");
@@ -162,7 +166,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         moveTaskToBack(true);
                         android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(1);
-//                    finish();
                     }
                 });
                 myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {

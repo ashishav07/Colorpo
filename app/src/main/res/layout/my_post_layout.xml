@@ -50,6 +50,13 @@
                 android:layout_toEndOf="@id/user_image"
                 android:textSize="18sp"
                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/likes"
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/user_image"
+                />
         </RelativeLayout>
 
         <LinearLayout
@@ -58,27 +65,29 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:id="@+id/likes"
-                />
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="0.4"
+                android:layout_weight="0.3"
                 android:text="Like" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/contact"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="0.4"
+                android:layout_weight="0.2"
                 android:text="Contact the Author" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="0.3"
+                android:text="Delete" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

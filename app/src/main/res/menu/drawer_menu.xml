@@ -13,6 +13,11 @@
             android:icon="@drawable/ic_profile"
             android:title="Profile" />
         <item
+            android:id="@+id/myPosts"
+            android:icon="@drawable/ic_view_headline_black_24dp"
+            android:title="My Posts"
+            />
+        <item
             android:id="@+id/about"
             android:icon="@drawable/ic_about"
             android:title="About Us" />

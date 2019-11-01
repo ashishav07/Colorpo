@@ -9,12 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class PostViewHolder extends RecyclerView.ViewHolder {
+public class MyPostViewHolder extends RecyclerView.ViewHolder {
     public ImageView userImage;
     private final Context context;
-    public TextView likes,username,subject,cdesc;
-    public Button like,contact;
-    public PostViewHolder(@NonNull View itemView) {
+    public TextView likes,username,subject,cdesc,notPosted;
+    public Button like,contact,del;
+    public MyPostViewHolder(@NonNull View itemView) {
         super(itemView);
         context = itemView.getContext();
         userImage = itemView.findViewById(R.id.user_image);
@@ -23,6 +23,8 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         contact = itemView.findViewById(R.id.contact);
         cdesc = itemView.findViewById(R.id.content_desc);
         likes = itemView.findViewById(R.id.likes);
+        del = itemView.findViewById(R.id.delete);
+        notPosted = itemView.findViewById(R.id.notPosted);
     }
 
 }

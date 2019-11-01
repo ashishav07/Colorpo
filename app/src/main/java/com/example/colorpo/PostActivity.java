@@ -137,12 +137,17 @@ public class PostActivity extends AppCompatActivity {
                 posts = documentSnapshot.getString("posts");
             }
         });
-        String id = db.collection("Posts").document().getId();
+        final String id = db.collection("Posts").document().getId();
         post.put("Pid",id);
         db.collection("Posts").document(id).set(post).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 setPosts(posts);
+
+                Map<String,Object> map = new HashMap<>();
+                map.put("post",1);
+                db.collection("Users").document(mUser.getUid()).collection("Posts").document(id).set(map);
+
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 progressDialog.hide();
             }
