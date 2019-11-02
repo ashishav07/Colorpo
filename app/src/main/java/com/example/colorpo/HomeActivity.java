@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // To handle clicks on navigation menu items
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(5).setCheckable(false); //Exit button is not checkable
+        navigationView.getMenu().getItem(6).setCheckable(false); //Exit button is not checkable
         navigationView.getMenu().getItem(0).setChecked(true);  //Home button is default
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
@@ -141,6 +141,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.myPosts:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MyPostsFragment()).addToBackStack(null).commit();
+                break;
+            case R.id.likedPosts:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new LikedPostsFragment()).addToBackStack(null).commit();
                 break;
             case R.id.exitApp:
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);

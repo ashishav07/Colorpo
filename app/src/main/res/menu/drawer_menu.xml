@@ -18,6 +18,11 @@
             android:title="My Posts"
             />
         <item
+            android:id="@+id/likedPosts"
+            android:icon="@drawable/ic_thumb_up_black_24dp"
+            android:title="Liked Posts"
+            />
+        <item
             android:id="@+id/about"
             android:icon="@drawable/ic_about"
             android:title="About Us" />

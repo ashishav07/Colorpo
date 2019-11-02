@@ -101,7 +101,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 fname = firstName.getText().toString();
                 lname = lastName.getText().toString();
                 mobile = phone.getText().toString();
-
                 if (filePath != null) {
                     StorageReference reference = storageReference
                             .child("images/" + mUser.getUid());

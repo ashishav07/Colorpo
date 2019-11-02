@@ -29,7 +29,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         this.context = context;
         this.postArrayList = postArrayList;
     }
-
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -73,7 +72,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(holder.like.getText().toString() == "Like"){
+                if(holder.like.getText().toString().equals("Like")){
                     Map<String,Object> map = new HashMap<>();
                     map.put("liked",1);
                     db.collection("Likes").document(postId)
