@@ -18,7 +18,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
-                android:background="@drawable/gradient_background"
+                android:background="@android:color/holo_blue_light"
                 android:orientation="vertical">
 
                 <ImageButton
