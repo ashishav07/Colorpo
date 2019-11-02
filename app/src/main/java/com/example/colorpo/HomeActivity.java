@@ -48,10 +48,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private DrawerLayout drawer;
     private StorageReference ref;
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private ProgressDialog progressDialog;
     Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading Your Timeline...");
+        progressDialog.show();
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         intent = getIntent();
         ref = FirebaseStorage.getInstance().getReference().child("images/"+mUser.getUid());
@@ -76,25 +81,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         TextView textView = headerView.findViewById(R.id.username);
         final ImageView imageView = headerView.findViewById(R.id.user_image);
         textView.setText(mUser.getDisplayName());
-        final long ONE_MEGABYTE = 1024*1024;
-        ref.getBytes(ONE_MEGABYTE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                        DisplayMetrics dm = new DisplayMetrics();
-                        getWindowManager().getDefaultDisplay().getMetrics(dm);
-                //        Picasso.get().load(getImageUri(getApplicationContext(), bm)).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
-                        //Glide.with(getApplicationContext())
-                            //    .load(getImageUri(getApplicationContext(),bm))
-                              //  .apply(RequestOptions.circleCropTransform())
-                                //.into(imageView);
-//                        imageView.setImageBitmap(bm);
-                        CircleTransform tr = new CircleTransform();
-                        Bitmap b = tr.transform(bm);
-                        imageView.setImageBitmap(b);
+        final boolean[] flag = {true};
+        ref = firebaseStorage.getReferenceFromUrl("gs://colorpo-6fb15.appspot.com/").child("images/" + mUser.getUid());
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                while (flag[0]) {
+                    if(!uri.toString().isEmpty()){
+                        flag[0] = false;
+                        Picasso.get().load(uri.toString()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
+                        progressDialog.hide();
                     }
-                });
+                }
+            }
+        });
         //intent of floating action button
         findViewById(R.id.floatingActionButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,13 +103,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(i);
             }
         });
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
     }
 
     @Override

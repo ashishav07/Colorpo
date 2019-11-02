@@ -9,11 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,6 +39,7 @@ public class ProfileFragment extends Fragment {
     private TextView posts;
     private Intent intent;
     private StorageReference ref;
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,21 +68,20 @@ public class ProfileFragment extends Fragment {
                     }
                 }
             });
-        final long ONE_MEGABYTE = 1024*1024;
-        ref.getBytes(ONE_MEGABYTE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                        DisplayMetrics dm = new DisplayMetrics();
-                        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-                  //      Picasso.get().load(getImageUri(getActivity(), bm)).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
-                        CircleTransform tr = new CircleTransform();
-                        Bitmap b = tr.transform(bm);
-                        imageView.setImageBitmap(b);
+        final boolean[] flag = {true};
+        ref = firebaseStorage.getReferenceFromUrl("gs://colorpo-6fb15.appspot.com/").child("images/" + mUser.getUid());
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                while (flag[0]) {
+                    if(!uri.toString().isEmpty()){
+                        flag[0] = false;
+                        Picasso.get().load(uri.toString()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
                         progressDialog.hide();
                     }
-                });
+                }
+            }
+        });
         root.findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,11 +89,5 @@ public class ProfileFragment extends Fragment {
             }
         });
         return root;
-    }
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
     }
 }

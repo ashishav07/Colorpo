@@ -129,7 +129,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
                 context.startActivity(Intent.createChooser(intent,"Email to.."));
             }
         });
+        // image loader
         Picasso.get().load(postArrayList.get(position).getDp()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(holder.userImage);
+        // image loader ends
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

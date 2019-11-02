@@ -52,6 +52,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private FirebaseUser mUser;
     private FirebaseStorage storage;
     private StorageReference storageReference, ref;
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,25 +90,20 @@ public class EditProfileActivity extends AppCompatActivity {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1);
             }
         });
-
-        //Get image from Firebase
-        ref = storageReference.child("images/" + mUser.getUid());
-        final long ONE_MEGABYTE = 1024*1024;
-        ref.getBytes(ONE_MEGABYTE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                    @Override
-                    public void onSuccess(byte[] bytes) {
-                        Bitmap bm = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                        DisplayMetrics dm = new DisplayMetrics();
-                        getWindowManager().getDefaultDisplay().getMetrics(dm);
-                      //  Picasso.get().load(getImageUri(getApplicationContext(), bm)).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
-                        CircleTransform tr = new CircleTransform();
-                        Bitmap b = tr.transform(bm);
-                        imageView.setImageBitmap(b);
+        final boolean[] flag = {true};
+        ref = firebaseStorage.getReferenceFromUrl("gs://colorpo-6fb15.appspot.com/").child("images/" + mUser.getUid());
+        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                while (flag[0]) {
+                    if(!uri.toString().isEmpty()){
+                        flag[0] = false;
+                        Picasso.get().load(uri.toString()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
                         progressDialog.hide();
                     }
-                });
-
+                }
+            }
+        });
         findViewById(R.id.update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +122,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
                                     progressDialog.hide();
+                                    startActivity(new Intent(EditProfileActivity.this,HomeActivity.class));
                                 }
                             });
                 }
