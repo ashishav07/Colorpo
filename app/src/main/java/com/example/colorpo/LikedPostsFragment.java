@@ -77,19 +77,18 @@ public class LikedPostsFragment extends Fragment{
                                     if(task.isSuccessful()){
                                         if(task.getResult().exists()){
                                             postArrayList.add(post);
-                                            Log.i("postArrayList", String.valueOf(postArrayList));
                                         }
                                     }
                                 }
                             });
                         }
                         Log.i("postArrayList1", String.valueOf(postArrayList));
-                        if(!postArrayList.isEmpty()){
-                            MyPostAdapter postAdapter = new MyPostAdapter(getActivity(), postArrayList);
-                            recyclerView.setAdapter(postAdapter);
+                        if(postArrayList.isEmpty()){
+                            root.findViewById(R.id.notPosted).setVisibility(View.VISIBLE);
                         }
                         else {
-                            root.findViewById(R.id.notPosted).setVisibility(View.VISIBLE);
+                            PostAdapter postAdapter = new PostAdapter(getActivity(), postArrayList);
+                            recyclerView.setAdapter(postAdapter);
                         }
                         progressDialog.hide();
                     }
