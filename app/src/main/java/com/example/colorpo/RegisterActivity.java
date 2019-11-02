@@ -3,17 +3,21 @@ package com.example.colorpo;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText pass1;
     private EditText email;
     private FirebaseAuth mAuth;
+    private TextInputLayout fname_layout, lname_layout, email_layout, phone_layout, pass_layout, pass2_layout;
     private FirebaseUser fUser;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
@@ -40,18 +45,43 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         fname = findViewById(R.id.fname);
+        fname_layout = findViewById(R.id.fname_layout);
         lname = findViewById(R.id.lname);
+        lname_layout = findViewById(R.id.lname_layout);
         email = findViewById(R.id.email);
+        email_layout = findViewById(R.id.email_layout);
         mobile = findViewById(R.id.mobile);
+        phone_layout = findViewById(R.id.phone_layout);
+
         Button reg = findViewById(R.id.reg);
         pass = findViewById(R.id.pass1);
+        pass_layout = findViewById(R.id.pass_layout);
         pass1 = findViewById(R.id.pass2);
+        pass2_layout = findViewById(R.id.pass2_layout);
         mAuth = FirebaseAuth.getInstance();
         reg.setOnClickListener(this);
 
-        // Hide action bar
-        getSupportActionBar().hide();
+        // Edit action bar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(Html.fromHtml("<font color='#ffffff'>Register</font>"));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private boolean isValidEmail(String email) {
@@ -90,25 +120,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
+        fname_layout.setError(null);
+        lname_layout.setError(null);
+        email_layout.setError(null);
+        phone_layout.setError(null);
+        pass_layout.setError(null);
         if(!isValidName(fname.getText().toString().trim())){
-            fname.setError("Invalid Name");
+            fname_layout.setError("Invalid Name");
             return;
         }
         if(!isValidLName(lname.getText().toString().trim())){
-            lname.setError("Invalid Name");
+            lname_layout.setError("Invalid Name");
             return;
         }
 
         if(!isValidEmail(email.getText().toString().trim())){
-            email.setError("Enter Valid Email");
+            email_layout.setError("Enter Valid Email");
             return;
         }
         if(!isValidMobile(mobile.getText().toString().trim())){
-            mobile.setError("Invalid Number");
+            phone_layout.setError("Invalid Number");
             return;
         }
         if(!isValidPassword(pass.getText().toString(),pass1.getText().toString())){
-            pass.setError("Invalid or Passwords do not match");
+            pass_layout.setError("Invalid or Passwords do not match");
             return;
         }
 

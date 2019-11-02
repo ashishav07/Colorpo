@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,7 +23,9 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_forgot);
         findViewById(R.id.forgot).setOnClickListener(this);
         if (getSupportActionBar()!=null) {
-            getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Reset your password</font>"));        }
+            getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Reset password</font>"));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -44,5 +47,21 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

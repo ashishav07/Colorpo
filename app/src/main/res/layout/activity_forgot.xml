@@ -1,37 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ForgotActivity"
-    android:orientation="vertical">
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/username_layout"
-        app:errorEnabled="true"
-        app:hintTextAppearance="@style/HintText"
-        app:errorTextAppearance="@style/ErrorText"
-        android:focusedByDefault="false"
-        >
-        <com.google.android.material.textfield.TextInputEditText
+    android:orientation="horizontal"
+    android:gravity="center">
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.10">
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.80">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/email"
-            android:id="@+id/email"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="26dp"
+            android:focusedByDefault="false"
+            app:errorEnabled="true"
+            app:errorTextAppearance="@style/ErrorText"
+            app:hintTextAppearance="@style/HintText">
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/forgot"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="@string/send_reset_password_link"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="#ffffff"
-        />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/forgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/username_layout"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="51dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="52dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/send_reset_link"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="0dip"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.10">
+    </RelativeLayout>
 </LinearLayout>

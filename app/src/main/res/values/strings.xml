@@ -21,7 +21,7 @@
     <string name="about_us">About Us</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
-    <string name="send_reset_password_link">Send Reset Password Link</string>
+    <string name="send_reset_link">Send Reset Link</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="post">Post</string>
     <string name="subject">Subject</string>

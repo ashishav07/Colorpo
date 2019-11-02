@@ -40,13 +40,14 @@
                 android:minHeight="150dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:background="@drawable/rounded_ripple"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_profile"  />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/content_desc"
+                android:layout_marginStart="6dp"
                 android:layout_toEndOf="@id/user_image"
                 android:textSize="18sp"
                 />
