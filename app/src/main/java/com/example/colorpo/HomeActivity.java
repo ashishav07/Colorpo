@@ -114,28 +114,36 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
-            myAlert.setTitle("Exit");
-            myAlert.setMessage("Do you want to exit?");
-            myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    moveTaskToBack(true);
-                    android.os.Process.killProcess(android.os.Process.myPid());
+            if (count == 0) {
+//                super.onBackPressed();
+                AlertDialog.Builder myAlert = new AlertDialog.Builder(this);
+                myAlert.setTitle("Exit");
+                myAlert.setMessage("Do you want to exit?");
+                myAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
 //                    System.exit(1);
-                }
-            });
-            myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            myAlert.show();
+                    }
+                });
+                myAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                myAlert.show();
+            }
+            else {
+                getSupportFragmentManager().popBackStackImmediate();
+            }
         }
+
     }
 
     @Override
@@ -145,16 +153,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
                 break;
             case R.id.profile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ProfileFragment()).addToBackStack(null).commit();
                 break;
             case R.id.about:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).addToBackStack(null).commit();
                 break;
             case R.id.contact:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ContactFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new ContactFragment()).addToBackStack(null).commit();
                 break;
             case R.id.myPosts:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MyPostsFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new MyPostsFragment()).addToBackStack(null).commit();
                 break;
             case R.id.exitApp:
                 AlertDialog.Builder myAlert = new AlertDialog.Builder(this);

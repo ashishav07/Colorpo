@@ -70,22 +70,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.5"
                 android:text="Like" />
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/contact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="0.2"
-                android:text="Contact the Author" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.5"
                 android:text="Delete" />
 
         </LinearLayout>

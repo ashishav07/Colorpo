@@ -157,16 +157,17 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostViewHolder> {
         // delete button on click listener ends
 
         //contact on click listener
-        holder.contact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String email = postArrayList.get(position).getEmail();
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:" + email));
-                intent.putExtra(Intent.EXTRA_SUBJECT, postArrayList.get(position).getEmail());
-                context.startActivity(Intent.createChooser(intent, "Email to.."));
-            }
-        });
+        //not needed because we don't need to contact ourselves
+//        holder.contact.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String email = postArrayList.get(position).getEmail();
+//                Intent intent = new Intent(Intent.ACTION_SENDTO);
+//                intent.setData(Uri.parse("mailto:" + email));
+//                intent.putExtra(Intent.EXTRA_SUBJECT, postArrayList.get(position).getEmail());
+//                context.startActivity(Intent.createChooser(intent, "Email to.."));
+//            }
+//        });
         //contact on click listener ends
 
         //image setter

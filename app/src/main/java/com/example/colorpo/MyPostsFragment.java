@@ -40,7 +40,7 @@ public class MyPostsFragment extends Fragment{
 
     public void loadDataFromDatabase(){
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Loading your timeline...");
+        progressDialog.setMessage("Loading your posts...");
         progressDialog.show();
 
         if(postArrayList.size()>0){
