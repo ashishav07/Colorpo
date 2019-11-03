@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="You have not liked anything yet."
+        android:text="You have not liked any posts yet."
         android:textColor="#878787"
         android:textSize="22sp"
         android:textStyle="bold"
