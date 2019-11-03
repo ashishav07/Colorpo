@@ -40,14 +40,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
     public void onBindViewHolder(@NonNull final PostViewHolder holder, final int position) {
         holder.subject.setText(postArrayList.get(position).getSubject());
         final String postId = postArrayList.get(position).getPid();
-        holder.likes.setText(postArrayList.get(position).getLikes());
+        holder.likes.setText(postArrayList.get(position).getLikes()+" likes");
         String st = "<b>"+postArrayList.get(position).getName()+"</b>"+" updated a post on "+postArrayList.get(position).getTime();
         db.collection("Likes").document(postId).
                 collection("User").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 String z = Integer.toString(queryDocumentSnapshots.size());
-                holder.likes.setText(z);
+                holder.likes.setText(z + " likes");
             }
         });
         DocumentReference documentReference = db.collection("Likes").document(postId).
@@ -83,7 +83,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             String z = Integer.toString(queryDocumentSnapshots.size());
-                            holder.likes.setText(z);
+                            holder.likes.setText(z + " likes");
                         }
                     }).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -102,7 +102,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
                         @Override
                         public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                             String z = Integer.toString(queryDocumentSnapshots.size());
-                            holder.likes.setText(z);
+                            holder.likes.setText(z + " likes");
                         }
                     }).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override

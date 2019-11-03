@@ -6,7 +6,7 @@
     android:layout_margin="5dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:background="?android:attr/selectableItemBackground"
     app:cardElevation="6dp"
     app:cardCornerRadius="8dp">
 
@@ -40,7 +40,6 @@
                 android:minHeight="150dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:background="@drawable/rounded_ripple"
                 android:src="@drawable/ic_profile"  />
 
             <TextView
