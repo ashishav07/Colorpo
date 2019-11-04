@@ -13,10 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.navigation.NavigationView;
+
 public class ContactFragment extends Fragment implements View.OnClickListener {
     private CardView c, c4, c5, c6, c7;
     private TextView e1, e2, e3, e4, e5;
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(5).setChecked(true);
         View v = inflater.inflate(R.layout.fragment_contact, container, false);
         c = v.findViewById(R.id.cardView);
         c4 = v.findViewById(R.id.cardView4);
