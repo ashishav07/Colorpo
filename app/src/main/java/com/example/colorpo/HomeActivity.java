@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -30,14 +29,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawer;
     private StorageReference ref;
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-    private ProgressDialog progressDialog;
     Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading Your Timeline...");
-        progressDialog.show();
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         intent = getIntent();
         ref = FirebaseStorage.getInstance().getReference().child("images/"+mUser.getUid());
@@ -73,13 +68,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     if(!uri.toString().isEmpty()){
                         flag[0] = false;
                         Picasso.get().load(uri.toString()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
-                        progressDialog.hide();
                     }
                 }
             }
         });
-
-
         //intent of floating action button
         findViewById(R.id.floatingActionButton).setOnClickListener(new View.OnClickListener() {
             @Override

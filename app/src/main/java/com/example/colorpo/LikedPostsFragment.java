@@ -61,7 +61,6 @@ public class LikedPostsFragment extends Fragment{
                                     "",
                                     querySnapshot.getString("Pid")
                             );
-
                             String pId = querySnapshot.getString("Pid");
                             String uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                             while(pId == null){
@@ -78,14 +77,14 @@ public class LikedPostsFragment extends Fragment{
                                     if(task.isSuccessful()){
                                         if(task.getResult().exists()){
                                             postArrayList.add(post);
-                                            if (postArrayList.isEmpty()) {
-                                                root.findViewById(R.id.notPosted).setVisibility(View.VISIBLE);
-                                            } else {
-                                                PostAdapter postAdapter = new PostAdapter(getActivity(), postArrayList);
-                                                recyclerView.setAdapter(postAdapter);
-                                            }
+                                            PostAdapter postAdapter = new PostAdapter(getActivity(), postArrayList);
+                                            recyclerView.setAdapter(postAdapter);
+                                            root.findViewById(R.id.notPosted).setVisibility(View.GONE);
                                             progressDialog.hide();
-
+                                        }
+                                        else{
+                                            root.findViewById(R.id.notPosted).setVisibility(View.VISIBLE);
+                                            progressDialog.hide();
                                         }
                                     }
                                 }

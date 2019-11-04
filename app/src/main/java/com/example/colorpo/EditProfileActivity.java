@@ -15,12 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -37,7 +38,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private ImageView imageView;
     private Uri filePath = null;
-    private Task<Uri> imgURL = null;
     private FirebaseUser mUser;
     private FirebaseStorage storage;
     private StorageReference storageReference, ref;
@@ -101,6 +101,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 fname = firstName.getText().toString();
                 lname = lastName.getText().toString();
                 mobile = phone.getText().toString();
+                CollectionReference posts = db.collection("Posts");
+                final Query query = posts.whereEqualTo("id",mUser.getUid());
                 if (filePath != null) {
                     StorageReference reference = storageReference
                             .child("images/" + mUser.getUid());
@@ -131,6 +133,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         });
             }
         });
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(Html.fromHtml("<font color='#ffffff'>Edit Profile</font>"));
         }
