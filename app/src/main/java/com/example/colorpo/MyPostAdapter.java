@@ -181,6 +181,7 @@ public class MyPostAdapter extends RecyclerView.Adapter<MyPostViewHolder> {
                 intent.putExtra("description", postArrayList.get(position).getDescription());
                 intent.putExtra("time", postArrayList.get(position).getTime());
                 intent.putExtra("subject", postArrayList.get(position).getSubject());
+                intent.putExtra("email",postArrayList.get(position).getEmail());
                 context.startActivity(intent);
             }
         });

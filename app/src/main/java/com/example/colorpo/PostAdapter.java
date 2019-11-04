@@ -124,7 +124,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
                 String email = postArrayList.get(position).getEmail();
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:" + email));
-                intent.putExtra(Intent.EXTRA_SUBJECT,postArrayList.get(position).getEmail());
+                intent.putExtra(Intent.EXTRA_SUBJECT,postArrayList.get(position).getSubject());
                 context.startActivity(Intent.createChooser(intent,"Email to.."));
             }
         });
@@ -140,6 +140,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
                 intent.putExtra("description",postArrayList.get(position).getDescription());
                 intent.putExtra("time",postArrayList.get(position).getTime());
                 intent.putExtra("subject",postArrayList.get(position).getSubject());
+                intent.putExtra("email",postArrayList.get(position).getEmail());
                 context.startActivity(intent);
             }
         });

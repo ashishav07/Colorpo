@@ -1,7 +1,6 @@
 package com.example.colorpo;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +41,8 @@ public class LikedPostsFragment extends Fragment{
         if(postArrayList.size()>0){
             postArrayList.clear();
         }
+
+
         db.collection("Posts")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -77,20 +78,20 @@ public class LikedPostsFragment extends Fragment{
                                     if(task.isSuccessful()){
                                         if(task.getResult().exists()){
                                             postArrayList.add(post);
+                                            if (postArrayList.isEmpty()) {
+                                                root.findViewById(R.id.notPosted).setVisibility(View.VISIBLE);
+                                            } else {
+                                                PostAdapter postAdapter = new PostAdapter(getActivity(), postArrayList);
+                                                recyclerView.setAdapter(postAdapter);
+                                            }
+                                            progressDialog.hide();
+
                                         }
                                     }
                                 }
                             });
                         }
-                        Log.i("postArrayList1", String.valueOf(postArrayList));
-                        if(postArrayList.isEmpty()){
-                            root.findViewById(R.id.notPosted).setVisibility(View.VISIBLE);
-                        }
-                        else {
-                            PostAdapter postAdapter = new PostAdapter(getActivity(), postArrayList);
-                            recyclerView.setAdapter(postAdapter);
-                        }
-                        progressDialog.hide();
+
                     }
                 });
     }
