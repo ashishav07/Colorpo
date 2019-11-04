@@ -9,25 +9,33 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +50,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference, ref;
     private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+    private ArrayList<String> arrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +120,18 @@ public class EditProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                     Toast.makeText(getApplicationContext(), "Image Upload Successful", Toast.LENGTH_SHORT).show();
-                                    progressDialog.hide();
-                                    startActivity(new Intent(EditProfileActivity.this,HomeActivity.class));
+                                    final String[] dp = {null};
+                                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            while (dp[0] ==null)
+                                                dp[0] = uri.toString();
+                                            updateData(query,dp[0]);
+                                            Log.i("FilePath", String.valueOf(dp[0]));
+                                            progressDialog.hide();
+                                            startActivity(new Intent(EditProfileActivity.this,HomeActivity.class));
+                                        }
+                                    });
                                 }
                             });
                 }
@@ -168,5 +187,22 @@ public class EditProfileActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+    public void updateData(Query query, final String dp1){
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                for(DocumentSnapshot documentSnapshot : task.getResult()){
+                    arrayList.add(documentSnapshot.getString("Pid"));
+                }
+                Log.i("ArrayList", String.valueOf(arrayList));
+                WriteBatch batch = db.batch();
+                for (int k = 0; k < arrayList.size(); k++) {
+                    DocumentReference ref = db.collection("Posts").document(arrayList.get(k));
+                    batch.update(ref,"dp",dp1);
+                }
+                batch.commit();
+            }
+        });
     }
 }
