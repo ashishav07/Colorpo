@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ProfileActivity"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/graylight"
         android:orientation="vertical"
-        tools:context=".ProfileFragment">
+        tools:context=".ProfileActivity">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="405dp">
@@ -20,23 +21,6 @@
                 android:layout_height="350dp"
                 android:background="@android:color/holo_blue_light"
                 android:orientation="vertical">
-
-                <ImageButton
-                    android:id="@+id/edit"
-                    android:layout_width="42dp"
-                    android:layout_height="42dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginTop="17dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="291dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:clickable="true"
-                    android:contentDescription="@string/edit_profile"
-                    android:focusable="true"
-                    android:padding="4dp"
-                    android:src="@drawable/ic_edit" />
 
                 <ImageView
                     android:id="@+id/user_image"
