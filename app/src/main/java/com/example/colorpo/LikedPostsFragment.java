@@ -76,6 +76,7 @@ public class LikedPostsFragment extends Fragment {
                                 uId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                 uId = uId.trim();
                             }
+                            final int[] count = {0};
                             final DocumentReference documentReference = db.collection("Likes").
                                     document(pId.trim()).
                                     collection("User").document(uId.trim());
@@ -88,8 +89,13 @@ public class LikedPostsFragment extends Fragment {
                                             postArrayList.add(post);
                                             PostAdapter postAdapter = new PostAdapter(getActivity(), postArrayList);
                                             recyclerView.setAdapter(postAdapter);
-                                        } else {
+                                            count[0]++;
+                                        }
+                                        if(count[0]!=0){
                                             root.findViewById(R.id.notPosted).setVisibility(View.VISIBLE);
+                                        }
+                                        else{
+                                            root.findViewById(R.id.notPosted).setVisibility(View.GONE);
                                         }
                                         progressDialog.hide();
                                     }
