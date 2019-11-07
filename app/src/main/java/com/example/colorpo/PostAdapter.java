@@ -132,6 +132,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostViewHolder> {
         Picasso.get().load(postArrayList.get(position).getDp()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(holder.userImage);
         // image loader ends
 
+        // profile activity intent
+
+        holder.userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,ProfileActivity.class);
+                intent.putExtra("uid",postArrayList.get(position).getId());
+                context.startActivity(intent);
+            }
+        });
+
+        // profile activity intent ends
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
