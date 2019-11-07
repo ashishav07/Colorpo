@@ -33,6 +33,7 @@ public class HomeFragment extends Fragment{
         navigationView.getMenu().getItem(0).setChecked(true);
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.home_fragment,container,false);
         recyclerView = new RecyclerView(getContext());
+
         recyclerView = root.findViewById(R.id.postRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         postArrayList = new ArrayList<>();
@@ -70,7 +71,7 @@ public class HomeFragment extends Fragment{
                             }
                             PostAdapter postAdapter = new PostAdapter(getActivity(),postArrayList);
                             recyclerView.setAdapter(postAdapter);
-                            progressDialog.hide();
+                            progressDialog.dismiss();
                         }
                     });
     }

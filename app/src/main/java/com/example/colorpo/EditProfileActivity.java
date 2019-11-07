@@ -1,8 +1,8 @@
 package com.example.colorpo;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -33,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +44,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText firstName, lastName, phone;
     private String fname, lname, mobile;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private ProgressDialog progressDialog;
     private ImageView imageView;
     private Uri filePath = null;
     private FirebaseUser mUser;
@@ -63,12 +63,9 @@ public class EditProfileActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 
-        progressDialog = new ProgressDialog(this);
         firstName = findViewById(R.id.firstname);
         lastName = findViewById(R.id.lastname);
         phone = findViewById(R.id.mobile);
-        progressDialog.setMessage("Loading...");
-        progressDialog.show();
         db.collection("Users").document(mUser.getUid()).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -94,10 +91,9 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Uri uri) {
                 while (flag[0]) {
-                    if(!uri.toString().isEmpty()){
+                    if (!uri.toString().isEmpty()) {
                         flag[0] = false;
                         Picasso.get().load(uri.toString()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
-                        progressDialog.hide();
                     }
                 }
             }
@@ -105,13 +101,11 @@ public class EditProfileActivity extends AppCompatActivity {
         findViewById(R.id.update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                progressDialog.setMessage("Updating your Profile");
-                progressDialog.show();
                 fname = firstName.getText().toString();
                 lname = lastName.getText().toString();
                 mobile = phone.getText().toString();
                 CollectionReference posts = db.collection("Posts");
-                final Query query = posts.whereEqualTo("id",mUser.getUid());
+                final Query query = posts.whereEqualTo("id", mUser.getUid());
                 if (filePath != null) {
                     StorageReference reference = storageReference
                             .child("images/" + mUser.getUid());
@@ -124,12 +118,11 @@ public class EditProfileActivity extends AppCompatActivity {
                                     ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
-                                            while (dp[0] ==null)
+                                            while (dp[0] == null)
                                                 dp[0] = uri.toString();
-                                            updateData(query,dp[0]);
+                                            updateData(query, dp[0]);
                                             Log.i("FilePath", String.valueOf(dp[0]));
-                                            progressDialog.hide();
-                                            startActivity(new Intent(EditProfileActivity.this,HomeActivity.class));
+                                            startActivity(new Intent(EditProfileActivity.this, HomeActivity.class));
                                         }
                                     });
                                 }
@@ -173,6 +166,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -190,18 +184,19 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         }
     }
-    public void updateData(Query query, final String dp1){
+
+    public void updateData(Query query, final String dp1) {
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                for(DocumentSnapshot documentSnapshot : task.getResult()){
+                for (DocumentSnapshot documentSnapshot : task.getResult()) {
                     arrayList.add(documentSnapshot.getString("Pid"));
                 }
                 Log.i("ArrayList", String.valueOf(arrayList));
                 WriteBatch batch = db.batch();
                 for (int k = 0; k < arrayList.size(); k++) {
                     DocumentReference ref = db.collection("Posts").document(arrayList.get(k));
-                    batch.update(ref,"dp",dp1);
+                    batch.update(ref, "dp", dp1);
                 }
                 batch.commit();
             }

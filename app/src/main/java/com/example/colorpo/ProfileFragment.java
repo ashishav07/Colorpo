@@ -1,14 +1,7 @@
 package com.example.colorpo;
-
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +21,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayOutputStream;
 
 public class ProfileFragment extends Fragment {
     private TextView mobile;
@@ -56,9 +47,6 @@ public class ProfileFragment extends Fragment {
         email.setText(mUser.getEmail());
         mobile = root.findViewById(R.id.mobile);
         String userid= mUser.getUid();
-        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Loading Your Profile...");
-        progressDialog.show();
         db.document("Users/" + userid).get()
             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
@@ -78,7 +66,6 @@ public class ProfileFragment extends Fragment {
                     if(!uri.toString().isEmpty()){
                         flag[0] = false;
                         Picasso.get().load(uri.toString()).placeholder(R.drawable.ic_profile).transform(new CircleTransform()).into(imageView);
-                        progressDialog.hide();
                     }
                 }
             }
