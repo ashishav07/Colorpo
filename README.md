@@ -1,6 +1,6 @@
 # Colorpo
 Colorpo is developed with a goal of helping the university
-students. We basically provide a platform where alumini
+students. We basically provide a platform where alumni
 and current university students can interact with each
 other. We encourage sharing of one's experiences be it in
 university or in the corporate world. Our aim is to help
